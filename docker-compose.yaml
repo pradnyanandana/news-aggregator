@@ -1,0 +1,63 @@
+version: '3.8'
+services:
+    frontend:
+      build:
+        context: ./app-frontend 
+      ports:
+        - "3000:3000"
+      networks:
+        - app-network
+      volumes: 
+        - ./app-frontend:/app
+        - /app/node_modules
+
+    backend:
+      build:
+        context: ./app-backend/
+      restart: unless-stopped
+      environment:
+        MYSQL_DATABASE: ${DB_DATABASE}
+        MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        MYSQL_PASSWORD: ${DB_PASSWORD}
+        # MYSQL_USER: ${DB_USERNAME}
+      working_dir: /var/www
+      volumes:
+        - ./app-backend:/var/www
+      ports:
+        - "8000:8000"
+      networks:
+        - app-network
+        - db
+
+    appdb:
+      image: mysql:5.7
+      restart: unless-stopped
+      environment:
+        MYSQL_DATABASE: ${DB_DATABASE}
+        MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        MYSQL_PASSWORD: ${DB_PASSWORD}
+        MYSQL_USER: ${DB_USERNAME}
+      volumes:
+        - ./initdb:/docker-entrypoint-initdb.d
+      ports:
+        - 3306:3306
+      networks:
+        - db
+
+    phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      restart: unless-stopped
+      environment:
+        PMA_HOST: appdb
+        MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      depends_on:
+        - appdb
+      ports:
+        - 8443:80
+      networks:
+        - db
+
+networks:
+  app-network:
+    driver: bridge
+  db:

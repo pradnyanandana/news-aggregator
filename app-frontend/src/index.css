@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=Signika:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@400&display=swap");
+
+* {
+  outline: none;
+  box-sizing: border-box;
+}
+
+:root {
+  --body-bg-color: #f6f4ef;
+  --theme-bg-color: #fafafb;
+  --heading-font: "Signika", sans-serif;
+  --body-font: "Dosis", sans-serif;
+  --body-color: #2f2f33;
+  --active-color: #0162ff;
+  --active-light-color: #e1ebfb;
+  --header-bg-color: #fff;
+  --search-border-color: #efefef;
+  --border-color: #2a2d41;
+  --alert-bg-color: #e8f2ff;
+  --subtitle-color: #83838e;
+  --inactive-color: #f0f0f0;
+  --placeholder-color: #9b9ba5;
+  --time-button: #fc5757;
+  --level-button: #5052d5;
+  --button-color: #f5f5f6;
+  --button-background: #2a2d41;
+}
+
+::placeholder {
+  color: var(--placeholder-color);
+}
+
+img {
+  max-width: 100%;
+}
+
+html {
+  display: block;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--body-bg-color);
+  font-family: var(--body-font);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--body-color);
+  margin: 0;
+}
+
+input {
+  font-family: var(--body-font);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--body-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--heading-font);
+  font-weight: 700;
+}
+
+h1 {
+	font-size: 250%;
+}
+
+h2 {
+	font-size: 200%;
+}
+
+h3 {
+	font-size: 177.78%;
+}
+
+h4 {
+	font-size: 162.5%;
+}
+
+h5 {
+	font-size: 122%;
+}
+
+h6 {
+	font-size: 100%;
+}
+
+a, button {
+  font-family: var(--heading-font);
+  font-weight: 700;
+}
+
+@media only screen and (max-width: 768px) {
+  body, a, button {
+    font-size: 15px;
+  }
+}

@@ -1,0 +1,144 @@
+.wrapper {
+  max-width: 1340px;
+  padding: 0 30px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.container {
+  padding: 60px 40px;
+}
+
+.header .top-bar {
+  display: flex;
+  align-items: center;
+  transition: box-shadow 0.3s;
+  flex-shrink: 0;
+  padding: 40px;
+  white-space: nowrap;
+  width: 100%;
+  font-size: 14px;
+  justify-content: space-between;
+}
+
+.header .top-bar > * {
+  width: calc(100% / 3);
+}
+
+.header .logo {
+  text-align: center;
+}
+
+.header .buttons {
+  text-align: right;
+}
+
+.header .bottom-bar {
+  border-bottom: 1px solid var(--placeholder-color);
+}
+
+.header nav {
+  display: flex;
+  gap: 45px;
+  align-items: center;
+  justify-content: center;
+}
+
+.header nav a {
+  padding-bottom: 7px;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+}
+
+.header nav a.active {
+  border-bottom-color: var(--border-color);
+}
+
+button {
+  background-color: var(--button-background);
+  border: none;
+  border-radius: 50px;
+  color: var(--button-color);
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.search {
+  width: 100%;
+  max-width: 250px;
+  position: relative;
+  display: flex;
+}
+
+.search-term {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  padding: 12px 15px;
+  border-radius: 50px;
+  outline: none;
+  background: transparent;
+}
+
+.search-button {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  padding: 0;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  text-align: center;
+  color: var(--border-color);
+  cursor: pointer;
+  font-size: 20px;
+}
+
+article .img-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+article .img-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+article .container {
+  position: relative;
+  margin: 0 auto;
+  margin-top: -160px;
+  width: calc(100% - 160px);
+  border-radius: 5px;
+  background-color: var(--theme-bg-color);
+  z-index: 1;
+}
+
+@media only screen and (max-width: 768px) {
+  .wrapper {
+    padding: 0 15px;
+  }
+
+  .header .navigation,
+  .header .buttons {
+    display: none;
+  }
+
+  .header .top-bar > * {
+    width: 100%;
+  }
+
+  .header .bottom-bar .menu-wrapper {
+    display: none;
+  }
+}
