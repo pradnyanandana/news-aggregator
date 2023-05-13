@@ -24,7 +24,7 @@ const Header = () => {
         <div className="menu-wrapper">
           <nav>
             <a className="active">News</a>
-            <a>Sports</a>
+            <a>Sport</a>
             <a>Entertainment</a>
             <a>Life</a>
             <a>Money</a>

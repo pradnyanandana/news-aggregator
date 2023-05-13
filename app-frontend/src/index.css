@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Signika:wght@700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@400;600&display=swap");
 
 * {
   outline: none;
@@ -11,7 +11,8 @@
   --theme-bg-color: #fafafb;
   --heading-font: "Signika", sans-serif;
   --body-font: "Dosis", sans-serif;
-  --body-color: #2f2f33;
+  --heading-color: #2f2f33;
+  --body-color: #797b8f;
   --active-color: #0162ff;
   --active-light-color: #e1ebfb;
   --header-bg-color: #fff;
@@ -58,43 +59,78 @@ input {
   color: var(--body-color);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
+  color: var(--heading-color);
+  line-height: 1.2;
   font-family: var(--heading-font);
   font-weight: 700;
 }
 
 h1 {
-	font-size: 250%;
+  font-size: 500%;
 }
 
 h2 {
-	font-size: 200%;
+  font-size: 400%;
 }
 
 h3 {
-	font-size: 177.78%;
+  font-size: 355.56%;
 }
 
 h4 {
-	font-size: 162.5%;
+  font-size: 325%;
 }
 
 h5 {
-	font-size: 122%;
+  font-size: 244%;
 }
 
 h6 {
-	font-size: 100%;
+  font-size: 100%;
 }
 
-a, button {
+a,
+button {
+  color: var(--heading-color);
   font-family: var(--heading-font);
   font-weight: 700;
 }
 
 @media only screen and (max-width: 768px) {
-  body, a, button {
+  body,
+  a,
+  button {
     font-size: 15px;
+  }
+
+  h1 {
+    font-size: 250%;
+  }
+
+  h2 {
+    font-size: 200%;
+  }
+
+  h3 {
+    font-size: 177.78%;
+  }
+
+  h4 {
+    font-size: 162.5%;
+  }
+
+  h5 {
+    font-size: 122%;
+  }
+
+  h6 {
+    font-size: 100%;
   }
 }

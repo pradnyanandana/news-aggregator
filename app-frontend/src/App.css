@@ -97,6 +97,15 @@ button {
   font-size: 20px;
 }
 
+article {
+  display: none;
+  margin-bottom: 20px;
+}
+
+article.active {
+  display: block;
+}
+
 article .img-container {
   position: relative;
   padding-bottom: 56.25%;
@@ -114,14 +123,75 @@ article .img-container img {
   object-fit: cover;
 }
 
+article .img-container button {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
+
 article .container {
   position: relative;
   margin: 0 auto;
   margin-top: -160px;
   width: calc(100% - 160px);
   border-radius: 5px;
-  background-color: var(--theme-bg-color);
+  background-color: var(--body-bg-color);
   z-index: 1;
+}
+
+article .container span.info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: 600;
+}
+
+article .container span.info span {
+  width: 15px;
+  height: 2px;
+  background-color: var(--body-color);
+}
+
+.slider .navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 120px;
+}
+
+.slider .navigation .bullets {
+  display: flex;
+  gap: 8px;
+}
+
+.slider .navigation .bullets span {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--body-color);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.slider .navigation .bullets span:hover,
+.slider .navigation .bullets span.active {
+  border-bottom-color: var(--heading-color);;
+  background-color: var(--heading-color);
+}
+
+.slider .navigation .arrows {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.slider .navigation .arrows > * {
+  color: var(--body-color);
+  cursor: pointer;
+}
+
+.slider .navigation .arrows > *:hover {
+  color: var(--heading-color);
 }
 
 @media only screen and (max-width: 768px) {
@@ -129,9 +199,17 @@ article .container {
     padding: 0 15px;
   }
 
+  .container {
+    padding: 40px 0;
+  }
+
   .header .navigation,
   .header .buttons {
     display: none;
+  }
+
+  .header .top-bar {
+    padding: 15px 0;
   }
 
   .header .top-bar > * {
@@ -140,5 +218,27 @@ article .container {
 
   .header .bottom-bar .menu-wrapper {
     display: none;
+  }
+
+  article .img-container button {
+    top: 20px;
+    left: 20px;
+  }
+
+  article .container {
+    margin-top: -80px;
+    padding: 20px;
+    width: calc(100% - 40px);
+  }
+
+  .slider .navigation {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 40px;
+  }
+
+  .slider .navigation .bullets span {
+    width: 8px;
+    height: 8px;
   }
 }
