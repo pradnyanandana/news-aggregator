@@ -1,3 +1,23 @@
+/* ANIMATION */
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-20%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* STYLES */
 .wrapper {
   max-width: 1340px;
   padding: 0 30px;
@@ -22,6 +42,14 @@
   background-color: var(--body-color);
 }
 
+article .title {
+  cursor: pointer;
+}
+
+article .title:hover {
+  color: var(--active-color);
+}
+
 header .top-bar {
   display: flex;
   align-items: center;
@@ -44,6 +72,92 @@ header .logo {
 
 header .buttons {
   text-align: right;
+}
+
+header .drawer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--body-bg-color);
+  transition: height 0.3s ease;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  z-index: 4;
+}
+
+header .drawer button {
+  position: relative;
+  display: block !important;
+  width: calc(100% - 30px);
+  border-radius: 5px;
+  opacity: 0;
+  left: 15px;
+  bottom: 40px;
+  animation: 1s appear forwards;
+  animation-delay: var(--animation-delay);
+}
+
+header .drawer.open {
+  height: 100%;
+}
+
+header .drawer .menu-list {
+  text-align: left;
+}
+
+header .drawer .menu-list {
+  padding: 72px 15px 40px 15px;
+}
+
+header .drawer .menu-item-wrapper {
+  opacity: 0;
+  animation: 1s appear forwards;
+  animation-delay: var(--animation-delay);
+}
+
+header .drawer .menu-item-wrapper {
+  margin-bottom: 20px;
+}
+
+header .drawer .menu-item-text {
+  position: relative;
+  animation: 3.5s slideIn forwards;
+  animation-delay: var(--animation-delay);
+  transform: translateX(-20%);
+}
+
+header .search-drawer {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  height: fit-content;
+  width: 100vw;
+  background: var(--body-bg-color);
+  transition: top 0.3s ease;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  z-index: 2;
+}
+
+header .search-drawer > div {
+  padding: 72px 15px 40px 15px;
+}
+
+header .search-drawer.open {
+  top: 0;
+}
+
+header .search-drawer input {
+  opacity: 0;
+  animation: 1s appear forwards;
+  animation-delay: 0.2s;
+}
+
+header .search-drawer .search-term {
+  padding: 12px 15px;
 }
 
 header .bottom-bar {
@@ -75,7 +189,14 @@ header nav a.active {
 }
 
 .search-icon {
+  position: relative;
   display: none;
+  line-height: 0;
+  color: var(--heading-color);
+}
+
+.search-icon.open {
+  z-index: 5;
 }
 
 .search-term {
@@ -147,10 +268,6 @@ header nav a.active {
 
 .slider {
   margin-bottom: 60px;
-}
-
-.slider .title {
-  cursor: pointer;
 }
 
 .slider .navigation {
@@ -413,6 +530,7 @@ header nav a.active {
 }
 
 .hamburger {
+  position: relative;
   height: 32px;
   width: 32px;
   display: none;
@@ -423,10 +541,14 @@ header nav a.active {
   margin-left: auto;
 }
 
+.hamburger.open {
+  z-index: 5;
+}
+
 .line-top,
 .line-middle,
 .line-bottom {
-  height: 2px;
+  height: 1px;
   width: 20px;
   background-color: var(--heading-color);
   transition: all 0.2s ease;
@@ -434,7 +556,7 @@ header nav a.active {
 
 .hamburger .line-top {
   transform-origin: top left;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 .hamburger .line-middle {
@@ -448,7 +570,7 @@ header nav a.active {
 
 .hamburger .line-bottom {
   transform-origin: top left;
-  margin-top: 5px;
+  margin-top: 6px;
 }
 
 .hamburger.open .line-bottom {

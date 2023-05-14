@@ -1,4 +1,5 @@
 import { categories } from "../data/categories";
+import { Link } from "react-router-dom";
 import { Facebook, Twitter, Dribbble, Linkedin } from "react-feather";
 
 const Footer = () => {
@@ -22,7 +23,7 @@ const Footer = () => {
               <ul className="footer-links">
                 {categories.map((cat, index) => (
                   <li key={index}>
-                    <a href="#">{cat.title}</a>
+                    <Link to={`/${cat.slug}`}>{cat.title}</Link>
                   </li>
                 ))}
               </ul>
@@ -34,19 +35,19 @@ const Footer = () => {
               <h6>Quick Links</h6>
               <ul className="footer-links">
                 <li>
-                  <a href="#">About Us</a>
+                  <Link to="/#">About Us</Link>
                 </li>
                 <li>
-                  <a href="#">Contact Us</a>
+                  <Link to="/#">Contact Us</Link>
                 </li>
                 <li>
-                  <a href="#">Contribute</a>
+                  <Link to="/#">Contribute</Link>
                 </li>
                 <li>
-                  <a href="#">Privacy Policy</a>
+                  <Link to="/#">Privacy Policy</Link>
                 </li>
                 <li>
-                  <a href="#">Sitemap</a>
+                  <Link to="/#">Sitemap</Link>
                 </li>
               </ul>
             </div>

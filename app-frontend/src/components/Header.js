@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { Search } from "react-feather";
+import { Link, useLocation } from "react-router-dom";
 import { categories } from "../data/categories";
 
-const MenuButton = () => {
-  const [open, setOpen] = useState(false);
-
+const MenuButton = ({ open, setOpen }) => {
   const handleClick = () => {
-    setOpen(!open);
+    setOpen(open ? false : "menu");
   };
 
   return (
-    <div className={`hamburger ${open ? "open" : ""}`} onClick={handleClick}>
+    <div
+      className={`hamburger ${open === "menu" ? "open" : ""}`}
+      onClick={handleClick}
+    >
       <div className="line-top" />
       <div className="line-middle" />
       <div className="line-bottom" />
@@ -18,7 +20,73 @@ const MenuButton = () => {
   );
 };
 
+const Menu = ({ open }) => {
+  const menuItems = categories.map((cat, index) => {
+    return (
+      <>
+        <div
+          className="menu-item-wrapper"
+          style={{ "--animation-delay": `${index * 0.2}s` }}
+        >
+          <Link to={`/${cat.slug}`} className="menu-item-text">
+            {cat.title}
+          </Link>
+        </div>
+      </>
+    );
+  });
+
+  return (
+    <div className={`drawer ${open === "menu" ? "open" : ""}`}>
+      {open === "menu" && (
+        <>
+          <div className="menu-list">{menuItems}</div>
+          <Link to="/auth">
+            <button
+              style={{ "--animation-delay": `${categories.length * 0.2}s` }}
+            >
+              Sign In
+            </button>
+          </Link>
+        </>
+      )}
+    </div>
+  );
+};
+
+const SearchDrawer = ({ open, setOpen }) => {
+  const handleClick = () => {
+    setOpen(open ? false : "search");
+  };
+
+  return (
+    <>
+      <div
+        className={`search-icon ${open === "search" ? "open" : ""}`}
+        onClick={handleClick}
+      >
+        <Search size={24} />
+      </div>
+      <div className={`search-drawer ${open === "search" ? "open" : ""}`}>
+        {open === "search" && (
+          <div>
+            <input
+              type="text"
+              className="search-term"
+              placeholder="Search"
+            ></input>
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
 const Header = () => {
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const { pathname } = location;
+
   return (
     <header>
       <div className="top-bar">
@@ -33,21 +101,37 @@ const Header = () => {
               <Search size={18} />
             </button>
           </div>
+          <SearchDrawer open={open} setOpen={setOpen} />
         </div>
         <div className="logo">
           <h1>.innews</h1>
         </div>
         <div className="buttons">
-          <button>Sign In</button>
-          <MenuButton />
+          <Link to="/auth">
+            <button>Sign In</button>
+          </Link>
+          <MenuButton open={open} setOpen={setOpen} />
+          <Menu open={open} setOpen={setOpen}></Menu>
         </div>
       </div>
       <div className="bottom-bar">
         <div className="menu-wrapper">
           <nav>
-            {categories.map((cat, index) => (
-              <a key={index}>{cat.title}</a>
-            ))}
+            {categories.map((cat, index) => {
+              const active =
+                pathname === `/${cat.slug}` ||
+                (pathname === "/" && cat.slug === "news");
+
+              return (
+                <Link
+                  className={active ? "active" : ""}
+                  key={index}
+                  to={`/${cat.slug}`}
+                >
+                  {cat.title}
+                </Link>
+              );
+            })}
           </nav>
         </div>
       </div>
