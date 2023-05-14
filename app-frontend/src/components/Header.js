@@ -3,7 +3,7 @@ import { Search } from "react-feather";
 
 const Header = () => {
   return (
-    <div className="header">
+    <header>
       <div className="top-bar">
         <div className="navigation">
           <div className="search">
@@ -33,7 +33,7 @@ const Header = () => {
           </nav>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 

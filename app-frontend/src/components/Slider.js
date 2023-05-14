@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowLeft, ArrowRight } from "react-feather";
+import { ReactSVG } from "react-svg";
 
 const datas = [
   { title: "The Most Cringe-Worthy Fact About Cat", active: true },
@@ -24,12 +24,16 @@ const Slider = () => {
     setActiveIndex((activeIndex + 1) % datas.length);
   };
 
+  const handleClickBullet = (index) => {
+    setActiveIndex(index);
+  };
+
   return (
     <div className="slider">
       {datas.map((data, index) => (
         <article key={index} className={index === activeIndex ? "active" : ""}>
           <div className="img-container">
-            <img src="/sample-image.jpg"></img>
+            <img src="/sample-image.jpg" alt="Article"></img>
             <button>Sport</button>
           </div>
           <div className="container">
@@ -51,12 +55,16 @@ const Slider = () => {
       <div className="navigation">
         <div className="bullets">
           {datas.map((data, index) => (
-            <span key={index}></span>
+            <span
+              key={index}
+              className={activeIndex === index ? "active" : ""}
+              onClick={() => handleClickBullet(index)}
+            ></span>
           ))}
         </div>
         <div className="arrows">
-          <ArrowLeft onClick={handleClickLeft} />
-          <ArrowRight onClick={handleClickRight} />
+          <ReactSVG src="svg/arrow-left.svg" onClick={handleClickLeft} />
+          <ReactSVG src="svg/arrow-right.svg" onClick={handleClickRight} />
         </div>
       </div>
     </div>

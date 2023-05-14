@@ -13,7 +13,7 @@
   --body-font: "Dosis", sans-serif;
   --heading-color: #2f2f33;
   --body-color: #797b8f;
-  --active-color: #0162ff;
+  --active-color: #737373;
   --active-light-color: #e1ebfb;
   --header-bg-color: #fff;
   --search-border-color: #efefef;
@@ -101,6 +101,14 @@ button {
   color: var(--heading-color);
   font-family: var(--heading-font);
   font-weight: 700;
+}
+
+a:hover {
+  color: var(--active-color);
+}
+
+svg {
+  stroke-width: 1px;
 }
 
 @media only screen and (max-width: 768px) {
