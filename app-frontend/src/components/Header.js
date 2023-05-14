@@ -1,5 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Search } from "react-feather";
+import { categories } from "../data/categories";
+
+const MenuButton = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  return (
+    <div className={`hamburger ${open ? "open" : ""}`} onClick={handleClick}>
+      <div className="line-top" />
+      <div className="line-middle" />
+      <div className="line-bottom" />
+    </div>
+  );
+};
 
 const Header = () => {
   return (
@@ -7,9 +24,13 @@ const Header = () => {
       <div className="top-bar">
         <div className="navigation">
           <div className="search">
-            <input type="text" className="search-term" placeholder="Search"></input>
+            <input
+              type="text"
+              className="search-term"
+              placeholder="Search"
+            ></input>
             <button type="submit" className="search-button">
-              <Search size={15} />
+              <Search size={18} />
             </button>
           </div>
         </div>
@@ -18,18 +39,15 @@ const Header = () => {
         </div>
         <div className="buttons">
           <button>Sign In</button>
+          <MenuButton />
         </div>
       </div>
       <div className="bottom-bar">
         <div className="menu-wrapper">
           <nav>
-            <a className="active">News</a>
-            <a>Sport</a>
-            <a>Entertainment</a>
-            <a>Life</a>
-            <a>Money</a>
-            <a>Tech</a>
-            <a>Travel</a>
+            {categories.map((cat, index) => (
+              <a key={index}>{cat.title}</a>
+            ))}
           </nav>
         </div>
       </div>
