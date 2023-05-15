@@ -43,7 +43,7 @@ const Menu = ({ open }) => {
           <div className="menu-list">{menuItems}</div>
           <Link to="/auth">
             <button
-              style={{ "--animation-delay": `${categories.length * 0.2}s` }}
+              style={{ "--animation-delay": "0.4s" }}
             >
               Sign In
             </button>

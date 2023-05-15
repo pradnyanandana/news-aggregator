@@ -6,7 +6,7 @@ services:
       ports:
         - "3000:3000"
       networks:
-        - app-network
+        - innews_env
       volumes: 
         - ./app-frontend:/app
         - /app/node_modules
@@ -16,21 +16,25 @@ services:
         context: ./app-backend/
       restart: unless-stopped
       environment:
+        MYSQL_HOST: appdb
+        MYSQL_PORT: 3306
         MYSQL_DATABASE: ${DB_DATABASE}
         MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
         MYSQL_PASSWORD: ${DB_PASSWORD}
-        # MYSQL_USER: ${DB_USERNAME}
+        MYSQL_USER: ${DB_USERNAME}
       working_dir: /var/www
+      command: php -S 0.0.0.0:8000 public/index.php
       volumes:
         - ./app-backend:/var/www
       ports:
         - "8000:8000"
+      links:
+        - appdb
       networks:
-        - app-network
-        - db
+        - innews_env
 
     appdb:
-      image: mysql:5.7
+      image: mysql:8.0
       restart: unless-stopped
       environment:
         MYSQL_DATABASE: ${DB_DATABASE}
@@ -42,7 +46,7 @@ services:
       ports:
         - 3306:3306
       networks:
-        - db
+        - innews_env
 
     phpmyadmin:
       image: phpmyadmin/phpmyadmin
@@ -55,9 +59,9 @@ services:
       ports:
         - 8443:80
       networks:
-        - db
+        - innews_env
 
+volumes:
+    db_data: {}
 networks:
-  app-network:
-    driver: bridge
-  db:
+    innews_env:
