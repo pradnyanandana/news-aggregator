@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +22,7 @@ Route::get('/auth/logout', [AuthController::class, 'logoutUser'])->middleware('a
 Route::get('/auth/user', [AuthController::class, 'getUser'])->middleware('auth:sanctum');
 
 Route::get('/news', [NewsController::class, 'getNews'])->middleware('auth:sanctum');
+Route::get('/news/{category}', [NewsController::class, 'getNewsByCategory'])->middleware('auth:sanctum');
+
+Route::get('/user/preferences', [UserController::class, 'getPreferences'])->middleware('auth:sanctum');
+Route::post('/user/preferences', [UserController::class, 'savePreferences'])->middleware('auth:sanctum');

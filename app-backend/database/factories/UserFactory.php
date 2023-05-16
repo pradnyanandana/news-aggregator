@@ -23,6 +23,11 @@ class UserFactory extends Factory
             'username' => 'usernews',
             'password' => Hash::make("password"),
             'remember_token' => Str::random(10),
+            'preferences' => serialize([
+                'sources' => [],
+                'categories' => [],
+                'authors' => []
+            ])
         ];
     }
 }
