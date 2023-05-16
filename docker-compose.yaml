@@ -22,6 +22,9 @@ services:
         MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
         MYSQL_PASSWORD: ${DB_PASSWORD}
         MYSQL_USER: ${DB_USERNAME}
+        NEWS_API: ${NEWS_API}
+        NEW_YORK_TIMES_API: ${NEW_YORK_TIMES_API}
+        THE_GUARDIAN_KEY: ${THE_GUARDIAN_KEY}
       working_dir: /var/www
       command: php -S 0.0.0.0:8000 public/index.php
       volumes:

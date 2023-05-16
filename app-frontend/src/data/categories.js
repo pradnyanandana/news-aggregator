@@ -1,9 +1,9 @@
 export const categories = [
   { title: "News", slug: 'news', link: <></> },
-  { title: "Sport", slug: 'sport', link: <></> },
+  { title: "Business", slug: 'business', link: <></> },
   { title: "Entertainment", slug: 'entertainment', link: <></> },
-  { title: "Life", slug: 'life', link: <></> },
-  { title: "Money", slug: 'money', link: <></> },
   { title: "Tech", slug: 'tech', link: <></> },
-  { title: "Travel", slug: 'travel', link: <></> },
+  { title: "Health", slug: 'travel', link: <></> },
+  { title: "Science", slug: 'science', link: <></> },
+  { title: "Sport", slug: 'sport', link: <></> },
 ];
