@@ -76,7 +76,7 @@ Follow these steps to run the project on your local machine:
 
 5. Access the application in your web browser.
    ```
-   http://localhost:8000
+   http://localhost:3000
    ```
    
 6. To stop the project, use `Ctrl+C` in the terminal or run the following command:
