@@ -21,8 +21,9 @@ Route::post('/auth/login', [AuthController::class, 'loginUser']);
 Route::get('/auth/logout', [AuthController::class, 'logoutUser'])->middleware('auth:sanctum');
 Route::get('/auth/user', [AuthController::class, 'getUser'])->middleware('auth:sanctum');
 
-Route::get('/news', [NewsController::class, 'getNews'])->middleware('auth:sanctum');
-Route::get('/news/{category}', [NewsController::class, 'getNewsByCategory'])->middleware('auth:sanctum');
+Route::get('/news', [NewsController::class, 'getNews']);
+Route::get('/news/search', [NewsController::class, 'getNewsSearch']);
+Route::get('/news/{category}', [NewsController::class, 'getNewsByCategory']);
 
 Route::get('/user/preferences', [UserController::class, 'getPreferences'])->middleware('auth:sanctum');
 Route::post('/user/preferences', [UserController::class, 'savePreferences'])->middleware('auth:sanctum');
