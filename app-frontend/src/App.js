@@ -5,8 +5,9 @@ import News from "./components/News";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Category from "./components/Category";
-import Auth from "./components/Auth";
 import Dashboard from "./components/Dashboard";
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
 
 const App = () => {
   return (
@@ -15,7 +16,8 @@ const App = () => {
         <Header />
         <Routes>
           <Route path="/" element={<News />}></Route>
-          <Route path="/auth" element={<Auth />}></Route>
+          <Route path="/sign-in" element={<SignIn />}></Route>
+          <Route path="/sign-up" element={<SignUp />}></Route>
           <Route path="/dashboard" element={<Dashboard />}></Route>
           {categories.map((cat) => (
             <Route

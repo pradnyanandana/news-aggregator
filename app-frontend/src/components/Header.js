@@ -41,7 +41,7 @@ const Menu = ({ open }) => {
       {open === "menu" && (
         <>
           <div className="menu-list">{menuItems}</div>
-          <Link to="/auth">
+          <Link to="/sign-in">
             <button
               style={{ "--animation-delay": "0.4s" }}
             >
@@ -107,7 +107,7 @@ const Header = () => {
           <h1>.innews</h1>
         </div>
         <div className="buttons">
-          <Link to="/auth">
+          <Link to="/sign-in">
             <button>Sign In</button>
           </Link>
           <MenuButton open={open} setOpen={setOpen} />

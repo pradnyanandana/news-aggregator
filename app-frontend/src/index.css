@@ -57,6 +57,12 @@ input {
   font-size: 18px;
   font-weight: 400;
   color: var(--body-color);
+  width: 100%;
+  border: 1px solid var(--border-color);
+  padding: 12px 15px;
+  border-radius: 50px;
+  outline: none;
+  background: transparent;
 }
 
 h1,
@@ -132,6 +138,7 @@ button {
     font-size: 15px;
   }
 
+  input,
   button {
     padding: 8px 12px;
   }
