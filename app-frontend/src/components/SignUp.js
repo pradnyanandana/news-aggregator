@@ -1,8 +1,9 @@
-import useToken from "../hooks/useToken";
 import { useEffect, useState } from "react";
 import { checkUser, registerUser } from "../requests";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ReactSVG } from "react-svg";
+import { useSelector } from "react-redux";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -12,23 +13,19 @@ const SignUp = () => {
   const [password, setPassword] = useState();
   const [repassword, setRePassword] = useState();
   const [loading, setLoading] = useState(false);
-  const [loginValid, setLoginValid] = useState(true);
 
-  const { token } = useToken();
+  const token = useSelector((state) => state.token.value);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setLoginValid(true);
 
-    const token = registerUser({
+    registerUser({
       name,
       username,
       password,
       repassword,
-    });
-
-    token
+    })
       .then((response) => {
         if (
           response !== undefined &&
@@ -37,7 +34,7 @@ const SignUp = () => {
           response.data !== null
         ) {
           console.log(response.data);
-          toast(response.data.message);
+          toast.success(response.data.message);
           navigate("/sign-in");
         }
 
@@ -45,9 +42,8 @@ const SignUp = () => {
       })
       .catch((error) => {
         console.log(error);
-        toast(error.response.data?.message);
+        toast.error(error.response.data?.message);
         setLoading(false);
-        setLoginValid(false);
       });
   };
 
@@ -64,7 +60,7 @@ const SignUp = () => {
             navigate("/dashboard");
           }
         })
-        .catch((error) => {});
+        .catch(() => {});
     }
   }, []);
 
@@ -98,7 +94,9 @@ const SignUp = () => {
             placeholder="Retype Password"
             onChange={(e) => setRePassword(e.target.value)}
           ></input>
-          <button type="submit">Register</button>
+          <button type="submit">
+            {loading ? <ReactSVG src="svg/loading-circle.svg" /> : "Register"}
+          </button>
         </form>
         <p>
           Already have an account? <Link to="/sign-in">Sign in</Link>

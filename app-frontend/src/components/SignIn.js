@@ -1,10 +1,10 @@
-import useToken from "../hooks/useToken";
-import useUser from "../hooks/useUser";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import { toast } from "react-toastify";
 import { loginUser, checkUser } from "../requests";
+import { useSelector, useDispatch } from "react-redux";
+import { saveToken, saveUser } from "../app/store";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -12,22 +12,18 @@ const SignIn = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
-  const [loginValid, setLoginValid] = useState(true);
 
-  const { setUser } = useUser();
-  const { setToken, token } = useToken();
+  const token = useSelector((state) => state.token.value);
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setLoginValid(true);
 
-    const token = loginUser({
+    loginUser({
       username,
       password,
-    });
-
-    token
+    })
       .then((response) => {
         if (
           response !== undefined &&
@@ -36,9 +32,9 @@ const SignIn = () => {
           response.data !== null
         ) {
           console.log(response.data);
-          toast(response.data.message);
-          setToken(response.data.token);
-          setUser(response.data.user);
+          toast.success(response.data.message);
+          dispatch(saveToken(response.data.token));
+          dispatch(saveUser(response.data.user))
           navigate("/dashboard");
         }
 
@@ -46,9 +42,8 @@ const SignIn = () => {
       })
       .catch((error) => {
         console.log(error);
-        toast(error.response.data?.message);
+        toast.error(error.response.data?.message);
         setLoading(false);
-        setLoginValid(false);
       });
   };
 
@@ -65,7 +60,7 @@ const SignIn = () => {
             navigate("/dashboard");
           }
         })
-        .catch((error) => {});
+        .catch(() => {});
     }
   }, []);
 
@@ -88,7 +83,7 @@ const SignIn = () => {
             onChange={(e) => setPassword(e.target.value)}
           ></input>
           <button type="submit">
-            {loading ? <ReactSVG src="svg/loading-circle.svg" /> : "Submit"}
+            {loading ? <ReactSVG src="svg/loading-circle.svg" /> : "Sign In"}
           </button>
         </form>
         <p>

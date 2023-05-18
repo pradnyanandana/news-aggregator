@@ -1,5 +1,3 @@
-import useToken from "../hooks/useToken";
-import useUser from "../hooks/useUser";
 import React, { useState } from "react";
 import { ReactSVG } from "react-svg";
 import { Search } from "react-feather";
@@ -7,6 +5,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { categories } from "../data/categories";
 import { logoutUser } from "../requests";
 import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import { removeToken, removeUser } from "../app/store";
 
 const MenuButton = ({ open, setOpen }) => {
   const handleClick = () => {
@@ -98,8 +98,9 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { setUser } = useUser();
-  const { setToken, token } = useToken();
+  const user = useSelector((state) => state.user.value);
+  const token = useSelector((state) => state.token.value);
+  const dispatch = useDispatch();
 
   const { pathname } = location;
 
@@ -110,13 +111,15 @@ const Header = () => {
     setLoading(true);
 
     logoutUser({ token })
-      .then((response) => {
+      .then(() => {
+        dispatch(removeUser());
+        dispatch(removeToken());
         navigate("/sign-in");
         setLoading(false);
       })
       .catch((error) => {
         console.log(error);
-        toast(error.response.data?.message);
+        toast.error(error.response.data?.message);
         setLoading(false);
       });
   };

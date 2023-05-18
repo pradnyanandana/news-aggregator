@@ -1,12 +1,12 @@
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import makeAnimated from "react-select/animated";
-import useToken from "../hooks/useToken";
 import { useEffect, useState } from "react";
 import { categories, sources } from "../data/categories";
 import { styles } from "../data/styles";
 import { checkUser } from "../requests";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -15,7 +15,8 @@ const Dashboard = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedSources, setSelectedSources] = useState([]);
 
-  const { token } = useToken();
+  const user = useSelector((state) => state.user.value);
+  const token = useSelector((state) => state.token.value);
 
   const changeCategories = (props) => {
     const categories = [...props];
@@ -54,7 +55,7 @@ const Dashboard = () => {
   return (
     <div className="container">
       <div className="dashboard">
-        <h5>Hello John Doe, Welcome to Your Dashboard!</h5>
+        <h5>{`Hello ${user?.name || ""}, Welcome to Your Dashboard!`}</h5>
         <div className="personal-preferences">
           <h6>News Preferences</h6>
           <form>

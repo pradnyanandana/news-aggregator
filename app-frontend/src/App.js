@@ -1,3 +1,5 @@
+import store from "./app/store";
+import { Provider } from "react-redux";
 import { categories } from "./data/categories";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -14,32 +16,34 @@ import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <div className="wrapper">
-        <Header />
-        <Routes>
-          <Route path="/" element={<News />}></Route>
-          <Route path="/sign-in" element={<SignIn />}></Route>
-          <Route path="/sign-up" element={<SignUp />}></Route>
-          <Route path="/dashboard" element={<Dashboard />}></Route>
-          <Route path="/search" element={<Search />}></Route>
-          {categories.map((cat) => (
-            <Route
-              path={`/${cat.slug}`}
-              element={
-                cat.slug === "news" ? (
-                  <Navigate to="/" />
-                ) : (
-                  <Category category={cat} />
-                )
-              }
-            />
-          ))}
-        </Routes>
-        <Footer />
-        <ToastContainer />
-      </div>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <div className="wrapper">
+          <Header />
+          <Routes>
+            <Route path="/" element={<News />}></Route>
+            <Route path="/sign-in" element={<SignIn />}></Route>
+            <Route path="/sign-up" element={<SignUp />}></Route>
+            <Route path="/dashboard" element={<Dashboard />}></Route>
+            <Route path="/search" element={<Search />}></Route>
+            {categories.map((cat) => (
+              <Route
+                path={`/${cat.slug}`}
+                element={
+                  cat.slug === "news" ? (
+                    <Navigate to="/" />
+                  ) : (
+                    <Category category={cat} />
+                  )
+                }
+              />
+            ))}
+          </Routes>
+          <Footer />
+          <ToastContainer />
+        </div>
+      </BrowserRouter>
+    </Provider>
   );
 };
 
