@@ -176,6 +176,7 @@ const Dashboard = () => {
               <CreatableSelect
                 isMulti
                 styles={styles}
+                value={selectedAuthors}
                 onChange={changeAuthors}
               />
               <p>Please type your prefered authors </p>

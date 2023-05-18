@@ -64,15 +64,43 @@ class NewsController extends Controller
     {
         try {
             $category = $request->category;
+            $user = auth('sanctum')->user();
+            $preferences = [];
 
-            $news =  $this->getNewsApi(array(
-                'type' => 'category',
+            if ($user) {
+                $preferences = User::where('id', $user->id)->first()->preferences;
+                $preferences = $preferences ? unserialize($preferences) : [];
+            }
+
+            $search = [
                 'category' => $category
-            ));
+            ];
+
+            if (!empty($preferences['sources'])) {
+                $search['sources'] = array_values(array_filter(
+                    $preferences['sources'],
+                    function ($v, $k) use ($category) {
+                        return $this->getSourceCategory($v) === $category;
+                    },
+                    ARRAY_FILTER_USE_BOTH
+                ));
+            }
+
+            $news =  $this->getNewsApi($search);
 
             usort($news, function ($a, $b) {
                 return $a['published_at'] <=> $b['published_at'];
             });
+
+            if (isset($preferences['authors']) && is_array($preferences['authors']) && count($preferences['authors']) > 0) {
+                $news = array_values(array_filter(
+                    $news,
+                    function ($v, $k) use ($preferences) {
+                        return in_array($v['author'], $preferences['authors']);
+                    },
+                    ARRAY_FILTER_USE_BOTH
+                ));
+            }
 
             return response()->json([
                 'status' => true,
@@ -117,7 +145,7 @@ class NewsController extends Controller
             if ($validateSearch->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => 'Validation Error',
                     'errors' => $validateSearch->errors()
                 ], 401);
             }
@@ -144,6 +172,60 @@ class NewsController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
+    }
+
+    /**
+     * Get Categories Filtered Sources
+     */
+    public function getSourceCategory($source)
+    {
+        $category = '';
+
+        switch ($source) {
+            case 'bloomberg':
+            case 'business-insider':
+            case 'fortune':
+            case 'the-wall-street-journal':
+                $category = 'business';
+                break;
+            case 'buzzfeed':
+            case 'entertainment-weekly':
+            case 'ign':
+            case 'mashable':
+            case 'mtv-news':
+            case 'polygon':
+                $category = 'entertainment';
+                break;
+            case 'crypto-coins-news':
+            case 'engadget':
+            case 'hacker-news':
+            case 'recode';
+            case 'techcrunch':
+            case 'techradar':
+            case 'the-next-web':
+            case 'the-verge':
+            case 'wired':
+                $category = 'tech';
+                break;
+            case 'bleacher-report':
+            case 'espn':
+            case 'espn-cric-info':
+            case 'fox-sports':
+            case 'nfl-news':
+            case 'nhl-news':
+                $category = 'sport';
+                break;
+            case 'medical-news-today':
+                $category = 'health';
+                break;
+            case 'national-geographic':
+            case 'new-scientist':
+            case 'next-big-future':
+                $category = 'science';
+                break;
+        }
+
+        return $category;
     }
 
     /**
@@ -201,52 +283,6 @@ class NewsController extends Controller
 
                 if (isset($response['articles']) && is_array($response['articles'])) {
                     foreach ($response['articles'] as $article) {
-                        $category = '';
-
-                        switch ($article['source']['id']) {
-                            case 'bloomberg':
-                            case 'business-insider':
-                            case 'fortune':
-                            case 'the-wall-street-journal':
-                                $category = 'business';
-                                break;
-                            case 'buzzfeed':
-                            case 'entertainment-weekly':
-                            case 'ign':
-                            case 'mashable':
-                            case 'mtv-news':
-                            case 'polygon':
-                                $category = 'entertainment';
-                                break;
-                            case 'crypto-coins-news':
-                            case 'engadget':
-                            case 'hacker-news':
-                            case 'recode';
-                            case 'techcrunch':
-                            case 'techradar':
-                            case 'the-next-web':
-                            case 'the-verge':
-                            case 'wired':
-                                $category = 'tech';
-                                break;
-                            case 'bleacher-report':
-                            case 'espn':
-                            case 'espn-cric-info':
-                            case 'fox-sports':
-                            case 'nfl-news':
-                            case 'nhl-news':
-                                $category = 'sport';
-                                break;
-                            case 'medical-news-today':
-                                $category = 'health';
-                                break;
-                            case 'national-geographic':
-                            case 'new-scientist':
-                            case 'next-big-future':
-                                $category = 'science';
-                                break;
-                        }
-
                         array_push(
                             $news,
                             array(
@@ -256,7 +292,7 @@ class NewsController extends Controller
                                 'source' => $article['source']['name'],
                                 'url' => $article['url'],
                                 'image' => $article['urlToImage'],
-                                'category' => $category,
+                                'category' => $this->getSourceCategory($article['source']['id']),
                                 'published_at' => strtotime($article['publishedAt']) * 1000,
                             )
                         );

@@ -1,12 +1,11 @@
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { useState } from "react";
-import { categories, sources } from "../data/categories";
 import { styles } from "../data/styles";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const Search = () => {
+const Search = ({ categories, sources }) => {
   const animatedComponents = makeAnimated();
 
   const [selectedCategories, setSelectedCategories] = useState([]);

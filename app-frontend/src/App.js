@@ -1,6 +1,6 @@
 import store from "./app/store";
 import { Provider } from "react-redux";
-import { categories } from "./data/categories";
+import { categories, sources } from "./data/categories";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
@@ -25,6 +25,7 @@ const App = () => {
 
 const Content = () => {
   const user = useSelector((state) => state.user.value);
+
   const categoriesFilter = categories.filter(
     (category) =>
       category.slug === "news" ||
@@ -32,6 +33,14 @@ const Content = () => {
       !user.preferences ||
       user.preferences.categories.length === 0 ||
       user.preferences.categories.find((cat) => cat === category.slug)
+  );
+
+  const sourcesFilter = sources.filter(
+    (source) =>
+      !user ||
+      !user.preferences ||
+      user.preferences.sources.length === 0 ||
+      user.preferences.sources.find((src) => src === source.slug)
   );
 
   return (
@@ -46,7 +55,7 @@ const Content = () => {
           <Route path="/sign-in" element={<SignIn />}></Route>
           <Route path="/sign-up" element={<SignUp />}></Route>
           <Route path="/dashboard" element={<Dashboard />}></Route>
-          <Route path="/search" element={<Search />}></Route>
+          <Route path="/search" element={<Search categories={categoriesFilter} sources={sourcesFilter} />}></Route>
           {categoriesFilter.map((cat, index) => (
             <Route
               key={index}
