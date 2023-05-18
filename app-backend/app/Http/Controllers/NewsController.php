@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
@@ -273,8 +274,8 @@ class NewsController extends Controller
                 'language' => 'en',
                 'q' => isset($param['search']) ? urlencode($param['search']) : '',
                 'searchIn' => isset($param['search']) ? 'title' : '',
-                'from' => isset($param['begin-date']) ? $param['begin-date'] : '',
-                'to' => isset($param['end-date']) ? $param['end-date'] : '',
+                'from' => isset($param['begin_date']) ? (new DateTime($param['begin_date']))->format(DateTime::ATOM) : '',
+                'to' => isset($param['end_date']) ? (new DateTime($param['end_date']))->format(DateTime::ATOM) : '',
                 'sources' => $sources
             ])->get('{+endpoint}?sources={sources}&pageSize={pageSize}&apiKey={apiKey}&q={q}&from={from}&to={to}&language={language}&searchIn={searchIn}');
 
@@ -318,9 +319,17 @@ class NewsController extends Controller
                     'endpoint' => 'https://api.nytimes.com/svc/search/v2/articlesearch.json',
                     'apiKey' => env('NEW_YORK_TIMES_API', ''),
                     'q' => isset($param['search']) ? urlencode($param['search']) : '',
-                    'from' => isset($param['begin-date']) ? $param['begin-date'] : '',
-                    'to' => isset($param['end-date']) ? $param['end-date'] : '',
-                ])->get('{+endpoint}?api-key={apiKey}&q={q}');
+                    'from' => isset($param['begin_date']) ? (new DateTime($param['begin_date']))->format('Ymd') : '',
+                    'to' => isset($param['end_date']) ? (new DateTime($param['end_date']))->format('Ymd') : '',
+                ])->get('{+endpoint}?api-key={apiKey}&q={q}&begin_date={from}&end_date{to}');
+
+                error_log(var_export([
+                    'endpoint' => 'https://api.nytimes.com/svc/search/v2/articlesearch.json',
+                    'apiKey' => env('NEW_YORK_TIMES_API', ''),
+                    'q' => isset($param['search']) ? urlencode($param['search']) : '',
+                    'from' => isset($param['begin_date']) ? (new DateTime($param['begin_date']))->format('Ymd') : '',
+                    'to' => isset($param['end_date']) ? (new DateTime($param['end_date']))->format('Ymd') : '',
+                ], true));
 
                 if ($response->ok()) {
                     $response = $response->json();
@@ -365,8 +374,8 @@ class NewsController extends Controller
                     'endpoint' => 'https://content.guardianapis.com/search',
                     'apiKey' => env('THE_GUARDIAN_KEY', ''),
                     'q' => isset($param['search']) ? urlencode($param['search']) : '',
-                    'from' => isset($param['begin-date']) ? $param['begin-date'] : '',
-                    'to' => isset($param['end-date']) ? $param['end-date'] : '',
+                    'from' => isset($param['begin_date']) ? (new DateTime($param['begin_date']))->format('Y-m-d') : '',
+                    'to' => isset($param['end_date']) ? (new DateTime($param['end_date']))->format('Y-m-d') : '',
                 ])->get('{+endpoint}?api-key={apiKey}&q={q}&from-date={from}&to-date={to}');
 
                 if ($response->ok()) {

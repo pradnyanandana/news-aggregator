@@ -102,14 +102,13 @@ const Search = ({ categories, sources }) => {
 
   useEffect(() => {
     if (newsData.length === 0) {
+      loadNews();
     } else {
       setLoading(false);
     }
   }, []);
 
-  return loading ? (
-    <Loading />
-  ) : (
+  return (
     <div className="container">
       <div className="search-page">
         <div className="filter">
@@ -166,33 +165,37 @@ const Search = ({ categories, sources }) => {
           </form>
         </div>
         <div className="articles-container">
-          {newsData.map((data, index) => (
-            <article key={index}>
-              <div>
-                <div className="img-container">
-                  <img
-                    src={data.image || "/placeholder.png"}
-                    alt="Article"
-                  ></img>
+          {loading ? (
+            <Loading />
+          ) : (
+            newsData.map((data, index) => (
+              <article key={index}>
+                <div>
+                  <div className="img-container">
+                    <img
+                      src={data.image || "/placeholder.png"}
+                      alt="Article"
+                    ></img>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <div className="container">
-                  <span className="info">
-                    <p>{data.source}</p>
-                  </span>
-                  <span className="info">
-                    <p>{data.author}</p>
-                    <span></span>
-                    <p>{new Date(data.published_at).toDateString()}</p>
-                  </span>
-                  <a href={data.url} target="_blank">
-                    <h5 className="title">{data.title}</h5>
-                  </a>
+                <div>
+                  <div className="container">
+                    <span className="info">
+                      <p>{data.source}</p>
+                    </span>
+                    <span className="info">
+                      <p>{data.author}</p>
+                      <span></span>
+                      <p>{new Date(data.published_at).toDateString()}</p>
+                    </span>
+                    <a href={data.url} target="_blank">
+                      <h5 className="title">{data.title}</h5>
+                    </a>
+                  </div>
                 </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            ))
+          )}
         </div>
       </div>
     </div>

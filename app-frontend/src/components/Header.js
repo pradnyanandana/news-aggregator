@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logoutUser } from "../requests";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { removeToken, removeUser, removeNews, saveQuery } from "../app/store";
+import { removeToken, removeUser, removeNews, removeFilterNews, saveQuery } from "../app/store";
 
 const MenuButton = ({ open, setOpen }) => {
   const handleClick = () => {
@@ -127,6 +127,7 @@ const Header = ({ categories }) => {
   const onSearch = (e) => {
     if (e.key === "Enter") {
       dispatch(saveQuery({ key: "search", value: e.target.value }));
+      dispatch(removeFilterNews());
       navigate("/search");
     }
   };
