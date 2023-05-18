@@ -8,5 +8,3 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql
 COPY . /var/www
 
 RUN composer install
-
-RUN php artisan migrate
