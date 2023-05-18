@@ -15,7 +15,7 @@ const Dashboard = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedSources, setSelectedSources] = useState([]);
 
-  const { setToken, token } = useToken();
+  const { token } = useToken();
 
   const changeCategories = (props) => {
     const categories = [...props];

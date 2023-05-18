@@ -1,3 +1,4 @@
+import useToken from "../hooks/useToken";
 import React, { useState } from "react";
 import { Search } from "react-feather";
 import { Link, useLocation } from "react-router-dom";
@@ -20,7 +21,7 @@ const MenuButton = ({ open, setOpen }) => {
   );
 };
 
-const Menu = ({ open }) => {
+const Menu = ({ open, pathname, token }) => {
   const menuItems = categories.map((cat, index) => {
     return (
       <>
@@ -41,13 +42,15 @@ const Menu = ({ open }) => {
       {open === "menu" && (
         <>
           <div className="menu-list">{menuItems}</div>
-          <Link to="/sign-in">
-            <button
-              style={{ "--animation-delay": "0.4s" }}
-            >
-              Sign In
-            </button>
-          </Link>
+          {pathname === "/dashboard" ? (
+            <button>Log Out</button>
+          ) : (
+            <Link to={token ? "/dashboard" : "/sign-in"}>
+              <button style={{ "--animation-delay": "0.4s" }}>
+                {token ? "Dashboard" : "Sign In"}
+              </button>
+            </Link>
+          )}
         </>
       )}
     </div>
@@ -83,9 +86,11 @@ const SearchDrawer = ({ open, setOpen }) => {
 };
 
 const Header = () => {
-  const [open, setOpen] = useState(false);
   const location = useLocation();
+  const { token } = useToken();
+
   const { pathname } = location;
+  const [open, setOpen] = useState(false);
 
   return (
     <header>
@@ -107,11 +112,20 @@ const Header = () => {
           <h1>.innews</h1>
         </div>
         <div className="buttons">
-          <Link to="/sign-in">
-            <button>Sign In</button>
-          </Link>
+          {pathname === "/dashboard" ? (
+            <button>Log Out</button>
+          ) : (
+            <Link to={token ? "/dashboard" : "/sign-in"}>
+              <button>{token ? "Dashboard" : "Sign In"}</button>
+            </Link>
+          )}
           <MenuButton open={open} setOpen={setOpen} />
-          <Menu open={open} setOpen={setOpen}></Menu>
+          <Menu
+            open={open}
+            setOpen={setOpen}
+            pathname={pathname}
+            token={token}
+          ></Menu>
         </div>
       </div>
       <div className="bottom-bar">
