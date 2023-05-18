@@ -407,6 +407,21 @@ header nav a.active {
   padding: 0;
 }
 
+.category .second-wrapper {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: 60px;
+}
+
+.category .second-wrapper article {
+  width: calc((100% / 3) - (80px / 3));
+}
+
+.category .second-wrapper article .container {
+  padding: 20px 0;
+}
+
 .site-footer {
   font-size: 15px;
   line-height: 24px;
@@ -718,6 +733,19 @@ header nav a.active {
 
   .category .first-wrapper article .img-container {
     margin-bottom: 20px;
+  }
+
+  .category .second-wrapper {
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .category .second-wrapper article {
+    width: 100%;
+  }
+
+  .category .second-wrapper article .title {
+    font-size: 177.28%;
   }
 
   .slider {
