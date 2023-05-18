@@ -1,6 +1,6 @@
-import "./App.css";
 import { categories } from "./data/categories";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import News from "./components/News";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -9,6 +9,8 @@ import Dashboard from "./components/Dashboard";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import Search from "./components/Search";
+import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
@@ -35,6 +37,7 @@ const App = () => {
           ))}
         </Routes>
         <Footer />
+        <ToastContainer />
       </div>
     </BrowserRouter>
   );

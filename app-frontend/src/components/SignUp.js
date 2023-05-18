@@ -4,7 +4,7 @@ const SignUp = () => {
   return (
     <div className="container">
       <div className="auth-form">
-        <h3>Create Your Account</h3>
+        <h5>Create Your Account</h5>
         <p>Let's get started to personalized your news feed</p>
         <form>
           <input type="text" className="name" placeholder="Name"></input>

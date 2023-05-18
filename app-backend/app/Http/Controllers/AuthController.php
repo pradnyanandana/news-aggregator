@@ -21,7 +21,11 @@ class AuthController extends Controller
     public function getUser(Request $request)
     {
         try {
-            return $request->user();
+            return response()->json([
+                'status' => true,
+                'message' => 'User Authenticated',
+                'token' => $request->user()
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -116,7 +120,7 @@ class AuthController extends Controller
             if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => 'Please check your username and password.',
                     'errors' => $validateUser->errors()
                 ], 401);
             }
@@ -124,7 +128,7 @@ class AuthController extends Controller
             if (!Auth::attempt($request->only(['username', 'password']))) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Email & Password does not match with our record.',
+                    'message' => 'Username & Password does not match with our record.',
                 ], 401);
             }
 
@@ -133,6 +137,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'User Logged In Successfully',
+                'user' => $user,
                 'token' => $user->createToken("API TOKEN")->plainTextToken
             ], 200);
         } catch (\Throwable $th) {

@@ -48,8 +48,8 @@ const Search = () => {
     );
   };
 
-  const onSubmitFilter = () => {
-    console.log(startDate)
+  const onSubmitFilter = (event) => {
+    event.preventDefault();
   }
 
   return (
