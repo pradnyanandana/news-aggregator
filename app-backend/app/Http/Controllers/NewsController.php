@@ -164,7 +164,7 @@ class NewsController extends Controller
             $response = Http::withUrlParameters([
                 'endpoint' => "https://newsapi.org/v2/{$endpoint}",
                 'apiKey' => env('NEWS_API', ''),
-                'pageSize' => 10,
+                'pageSize' => 100,
                 'language' => 'en',
                 'q' => isset($param['search']) ? urlencode($param['search']) : '',
                 'searchIn' => isset($param['search']) ? 'title' : '',
@@ -235,7 +235,7 @@ class NewsController extends Controller
                                 'url' => $article['url'],
                                 'image' => $article['urlToImage'],
                                 'category' => $category,
-                                'published_at' => strtotime($article['publishedAt']),
+                                'published_at' => strtotime($article['publishedAt']) * 1000,
                             )
                         );
                     }
@@ -281,7 +281,7 @@ class NewsController extends Controller
                                     'source' => $article['source'],
                                     'url' => $article['web_url'],
                                     'image' => $image ?  "https://www.nytimes.com/{$article['multimedia'][0]['url']}" : '',
-                                    'published_at' => strtotime($article['pub_date']),
+                                    'published_at' => strtotime($article['pub_date']) * 1000,
                                 )
                             );
                         }
@@ -325,7 +325,7 @@ class NewsController extends Controller
                                     'source' => 'The Guardian',
                                     'webUrl' => $article['webUrl'],
                                     'image' => '',
-                                    'published_at' => strtotime($article['webPublicationDate']),
+                                    'published_at' => strtotime($article['webPublicationDate']) * 1000,
                                 )
                             );
                         }

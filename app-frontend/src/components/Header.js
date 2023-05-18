@@ -98,7 +98,6 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const user = useSelector((state) => state.user.value);
   const token = useSelector((state) => state.token.value);
   const dispatch = useDispatch();
 

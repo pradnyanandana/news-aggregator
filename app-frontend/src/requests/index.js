@@ -31,11 +31,23 @@ export const checkUser = ({ token }) => {
 };
 
 export const logoutUser = ({ token }) => {
-    console.log(token)
-    return axios.get(process.env.REACT_APP_API_URL + "/auth/logout", {
+  return axios.get(process.env.REACT_APP_API_URL + "/auth/logout", {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getNews = ({ token, category }) => {
+  return axios.get(
+    process.env.REACT_APP_API_URL +
+      `/news${category == "news" ? "" : `/${category}`}`,
+    {
       headers: {
         "Content-type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    });
-  };
+    }
+  );
+};

@@ -1,4 +1,5 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { categories } from "../data/categories";
 
 const tokenKey = "token-innews";
 const tokenString = localStorage.getItem(tokenKey);
@@ -42,22 +43,35 @@ const userSlice = createSlice({
   },
 });
 
+const newsInitial = {};
+categories.map((category) => (newsInitial[category.slug] = []));
+
 const newsSlice = createSlice({
-    name: "token",
-    initialState: {
+  name: "news",
+  initialState: newsInitial,
+  reducers: {
+    saveNews: (state, action) => {
+      const { category, news } = action.payload;
+      state[category] = news;
     },
-    reducers: {
+    removeNews: (state) => {
+      categories.map((category) => {
+        state[category.slug] = [];
+      });
     },
-  });
+  },
+});
 
 export const { saveUser, removeUser } = userSlice.actions;
 
 export const { saveToken, removeToken } = tokenSlice.actions;
 
+export const { saveNews, removeNews } = newsSlice.actions;
+
 export default configureStore({
   reducer: {
     user: userSlice.reducer,
     token: tokenSlice.reducer,
-    news: newsSlice.reducer
+    news: newsSlice.reducer,
   },
 });
