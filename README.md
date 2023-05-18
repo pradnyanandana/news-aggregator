@@ -43,9 +43,17 @@ To create the `.env` file, follow these steps:
    cp .env.example .env
    ```
 
-5. Open the `.env` file in a text editor.
+5. Locate the `.env.example` file in the `app-frontend` directory.
 
-6. Replace the placeholder values in the file with your configuration values. For example:
+6. Make a copy of the `.env.example` file and rename it to `.env`.
+   ```
+   cd app-frontend
+   cp .env.example .env
+   ```
+
+7. Open the `.env` file in a text editor.
+
+8. Replace the placeholder values in the file with your configuration values. For example:
    ```
    DB_DATABASE=db
    DB_PASSWORD=pass
@@ -56,7 +64,7 @@ To create the `.env` file, follow these steps:
    THE_GUARDIAN_KEY=your_guardian_api_key
    ```
 
-7. Save the changes to the `.env` file.
+9. Save the changes to the `.env` file.
 
 ### Running the Project
 
