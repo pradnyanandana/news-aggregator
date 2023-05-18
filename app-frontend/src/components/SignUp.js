@@ -25,7 +25,7 @@ const SignUp = () => {
       name,
       username,
       password,
-      repassword
+      repassword,
     });
 
     token
@@ -53,16 +53,18 @@ const SignUp = () => {
 
   useEffect(() => {
     if (token) {
-      checkUser({ token }).then((response) => {
-        if (
-          response !== undefined &&
-          typeof response.data === "object" &&
-          !Array.isArray(response.data) &&
-          response.data !== null
-        ) {
-          navigate("/dashboard");
-        }
-      });
+      checkUser({ token })
+        .then((response) => {
+          if (
+            response !== undefined &&
+            typeof response.data === "object" &&
+            !Array.isArray(response.data) &&
+            response.data !== null
+          ) {
+            navigate("/dashboard");
+          }
+        })
+        .catch((error) => {});
     }
   }, []);
 

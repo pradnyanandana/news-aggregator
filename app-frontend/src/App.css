@@ -121,9 +121,7 @@
 
 .circular-loader {
   animation: rotate 2s linear infinite;
-  height: 100%;
   transform-origin: center center;
-  width: 100%;
   top: 0;
   left: 0;
   margin: auto;
@@ -565,7 +563,10 @@ header nav a.active {
 .search-page .filter .option p {
   font-size: 0.825rem;
   font-style: italic;
-  margin-bottom: 0px;
+}
+
+.dashboard .personal-preferences p {
+  margin-top: -1.125rem;
 }
 
 .dashboard .personal-preferences .action,
@@ -581,6 +582,11 @@ header nav a.active {
 .search-page .filter input {
   border-radius: 5px;
   border-color: var(--placeholder-color);
+}
+
+.search-page .filter .option p {
+  margin-top: 5px;
+  margin-bottom: 0;
 }
 
 .site-footer {
@@ -802,10 +808,6 @@ header nav a.active {
 .auth-form > *:not(:last-child),
 .auth-form form > *:not(:last-child) {
   margin-bottom: 40px;
-}
-
-.auth-form button svg {
-  width: 16px;
 }
 
 .Toastify__toast-body {

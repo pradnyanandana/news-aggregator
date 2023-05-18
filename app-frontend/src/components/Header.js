@@ -1,8 +1,12 @@
 import useToken from "../hooks/useToken";
+import useUser from "../hooks/useUser";
 import React, { useState } from "react";
+import { ReactSVG } from "react-svg";
 import { Search } from "react-feather";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { categories } from "../data/categories";
+import { logoutUser } from "../requests";
+import { toast } from "react-toastify";
 
 const MenuButton = ({ open, setOpen }) => {
   const handleClick = () => {
@@ -21,7 +25,7 @@ const MenuButton = ({ open, setOpen }) => {
   );
 };
 
-const Menu = ({ open, pathname, token }) => {
+const Menu = ({ open, pathname, token, handleLogout, loading }) => {
   const menuItems = categories.map((cat, index) => {
     return (
       <>
@@ -43,10 +47,15 @@ const Menu = ({ open, pathname, token }) => {
         <>
           <div className="menu-list">{menuItems}</div>
           {pathname === "/dashboard" ? (
-            <button>Log Out</button>
+            <button>
+              {loading ? <ReactSVG src="svg/loading-circle.svg" /> : "Log Out"}
+            </button>
           ) : (
             <Link to={token ? "/dashboard" : "/sign-in"}>
-              <button style={{ "--animation-delay": "0.4s" }}>
+              <button
+                style={{ "--animation-delay": "0.4s" }}
+                onClick={handleLogout}
+              >
                 {token ? "Dashboard" : "Sign In"}
               </button>
             </Link>
@@ -86,11 +95,31 @@ const SearchDrawer = ({ open, setOpen }) => {
 };
 
 const Header = () => {
+  const navigate = useNavigate();
   const location = useLocation();
-  const { token } = useToken();
+
+  const { setUser } = useUser();
+  const { setToken, token } = useToken();
 
   const { pathname } = location;
+
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleLogout = async () => {
+    setLoading(true);
+
+    logoutUser({ token })
+      .then((response) => {
+        navigate("/sign-in");
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        toast(error.response.data?.message);
+        setLoading(false);
+      });
+  };
 
   return (
     <header>
@@ -113,7 +142,9 @@ const Header = () => {
         </div>
         <div className="buttons">
           {pathname === "/dashboard" ? (
-            <button>Log Out</button>
+            <button onClick={handleLogout}>
+              {loading ? <ReactSVG src="svg/loading-circle.svg" /> : "Log Out"}
+            </button>
           ) : (
             <Link to={token ? "/dashboard" : "/sign-in"}>
               <button>{token ? "Dashboard" : "Sign In"}</button>
@@ -125,6 +156,8 @@ const Header = () => {
             setOpen={setOpen}
             pathname={pathname}
             token={token}
+            loading={loading}
+            handleLogout={handleLogout}
           ></Menu>
         </div>
       </div>

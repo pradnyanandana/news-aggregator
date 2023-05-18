@@ -65,6 +65,7 @@ const SignIn = () => {
             navigate("/dashboard");
           }
         })
+        .catch((error) => {});
     }
   }, []);
 
