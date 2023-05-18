@@ -1,26 +1,10 @@
-import axios from "axios";
 import useToken from "../hooks/useToken";
 import useUser from "../hooks/useUser";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import { toast } from "react-toastify";
-
-async function loginUser({ username, password }) {
-  return axios.post(process.env.REACT_APP_API_URL + "/auth/login", {
-    username,
-    password,
-  });
-}
-
-async function checkUser({ token }) {
-  return axios.get(process.env.REACT_APP_API_URL + "/auth/user", {
-    headers: {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-}
+import { loginUser, checkUser } from "../requests";
 
 const SignIn = () => {
   const navigate = useNavigate();

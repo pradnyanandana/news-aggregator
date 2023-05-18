@@ -1,14 +1,21 @@
 import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import makeAnimated from "react-select/animated";
-import { useState } from "react";
+import useToken from "../hooks/useToken";
+import { useEffect, useState } from "react";
 import { categories, sources } from "../data/categories";
 import { styles } from "../data/styles";
+import { checkUser } from "../requests";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const animatedComponents = makeAnimated();
+
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedSources, setSelectedSources] = useState([]);
+
+  const { setToken, token } = useToken();
 
   const changeCategories = (props) => {
     const categories = [...props];
@@ -37,6 +44,12 @@ const Dashboard = () => {
         selectedCategories.find((cat) => cat.value === source.category)
     );
   };
+
+  useEffect(() => {
+    checkUser({ token }).catch((error) => {
+      navigate("/sign-in");
+    });
+  }, []);
 
   return (
     <div className="container">

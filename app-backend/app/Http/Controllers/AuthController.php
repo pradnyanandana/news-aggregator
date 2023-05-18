@@ -68,14 +68,31 @@ class AuthController extends Controller
                 [
                     'name' => 'required',
                     'username' => 'required|unique:users,username',
-                    'password' => 'required'
+                    'password' => 'required',
+                    'repassword' => 'required'
                 ]
             );
+
+            if ($request->password !== $request->repassword) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Password and Retype Password is not the same',
+                    'errors' => $validateUser->errors()
+                ], 401);
+            }
+
+            if (User::where('username', '=', $request->username)->count() > 0) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Username has taken',
+                    'errors' => $validateUser->errors()
+                ], 401);
+            }
 
             if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => 'Please check your username and password',
                     'errors' => $validateUser->errors()
                 ], 401);
             }
@@ -83,7 +100,12 @@ class AuthController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'username' => $request->username,
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'preferences' => serialize([
+                    'sources' => [],
+                    'categories' => [],
+                    'authors' => []
+                ])
             ]);
 
             return response()->json([
@@ -120,7 +142,7 @@ class AuthController extends Controller
             if ($validateUser->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'Please check your username and password.',
+                    'message' => 'Please check your username and password',
                     'errors' => $validateUser->errors()
                 ], 401);
             }
