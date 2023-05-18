@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { ReactSVG } from "react-svg";
 import { Search } from "react-feather";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { categories } from "../data/categories";
 import { logoutUser } from "../requests";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { removeToken, removeUser } from "../app/store";
+import { removeToken, removeUser, removeNews } from "../app/store";
 
 const MenuButton = ({ open, setOpen }) => {
   const handleClick = () => {
@@ -25,7 +24,7 @@ const MenuButton = ({ open, setOpen }) => {
   );
 };
 
-const Menu = ({ open, pathname, token, handleLogout, loading }) => {
+const Menu = ({ open, pathname, token, handleLogout, loading, categories }) => {
   const menuItems = categories.map((cat, index) => {
     return (
       <>
@@ -94,7 +93,7 @@ const SearchDrawer = ({ open, setOpen }) => {
   );
 };
 
-const Header = () => {
+const Header = ({ categories }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -113,6 +112,7 @@ const Header = () => {
       .then(() => {
         dispatch(removeUser());
         dispatch(removeToken());
+        dispatch(removeNews());
         navigate("/sign-in");
         setLoading(false);
       })
@@ -159,6 +159,7 @@ const Header = () => {
             pathname={pathname}
             token={token}
             loading={loading}
+            categories={categories}
             handleLogout={handleLogout}
           ></Menu>
         </div>

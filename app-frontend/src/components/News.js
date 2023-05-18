@@ -1,11 +1,10 @@
-import { categories } from "../data/categories";
 import { useSelector, useDispatch } from "react-redux";
 import { saveNews } from "../app/store";
 import { useEffect, useState } from "react";
 import { ReactSVG } from "react-svg";
 import { getNews } from "../requests";
 
-const News = () => {
+const News = ({ categories }) => {
   const token = useSelector((state) => state.token.value);
   const newsData = useSelector((state) => state.news.news);
   const dispatch = useDispatch();

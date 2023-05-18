@@ -156,6 +156,10 @@ class AuthController extends Controller
 
             $user = User::where('username', $request->username)->first();
 
+            if ($user->preferences) {
+                $user->preferences = unserialize($user->preferences);
+            }
+
             return response()->json([
                 'status' => true,
                 'message' => 'User Logged In Successfully',
