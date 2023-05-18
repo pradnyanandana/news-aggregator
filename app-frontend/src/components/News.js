@@ -3,8 +3,10 @@ import { saveNews } from "../app/store";
 import { useEffect, useState } from "react";
 import { ReactSVG } from "react-svg";
 import { getNews } from "../requests";
+import Loading from "./Loading";
 
 const News = ({ categories }) => {
+  const [loading, setLoading] = useState(true);
   const token = useSelector((state) => state.token.value);
   const newsData = useSelector((state) => state.news.news);
   const dispatch = useDispatch();
@@ -26,14 +28,21 @@ const News = ({ categories }) => {
               })
             );
           }
+
+          setLoading(false);
         })
         .catch((error) => {
           console.log(error);
+          setLoading(false);
         });
+    } else {
+      setLoading(false);
     }
   }, []);
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <div className="container">
       <NewsSlider news={newsData} />
       <div className="news-category">

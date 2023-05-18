@@ -1,9 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
 import { getNewsCategory } from "../requests";
 import { saveNews } from "../app/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Loading from "./Loading";
 
 const Category = ({ category }) => {
+  const [loading, setLoading] = useState(true);
   const token = useSelector((state) => state.token.value);
   const newsData = useSelector((state) => state.news[category.slug]);
   const dispatch = useDispatch();
@@ -25,14 +27,21 @@ const Category = ({ category }) => {
               })
             );
           }
+
+          setLoading(false);
         })
         .catch((error) => {
           console.log(error);
+          setLoading(false);
         });
+    } else {
+      setLoading(false);
     }
   }, [category]);
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <div className="container">
       <div className="category">
         <h2>{category.title}</h2>

@@ -3,11 +3,13 @@ import makeAnimated from "react-select/animated";
 import { useState } from "react";
 import { styles } from "../data/styles";
 import DatePicker from "react-datepicker";
+import Loading from "./Loading";
 import "react-datepicker/dist/react-datepicker.css";
 
 const Search = ({ categories, sources }) => {
   const animatedComponents = makeAnimated();
 
+  const [loading, setLoading] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedSources, setSelectedSources] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
@@ -49,9 +51,11 @@ const Search = ({ categories, sources }) => {
 
   const onSubmitFilter = (e) => {
     e.preventDefault();
-  }
+  };
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <div className="container">
       <div className="search-page">
         <div className="filter">

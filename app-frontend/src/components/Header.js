@@ -123,6 +123,10 @@ const Header = ({ categories }) => {
       });
   };
 
+  const onSearch = (e) => {
+    console.log(e.target.value);
+  };
+
   return (
     <header>
       <div className="top-bar">
@@ -132,6 +136,7 @@ const Header = ({ categories }) => {
               type="text"
               className="search-term"
               placeholder="Search"
+              onInput={onSearch}
             ></input>
             <button type="submit" className="search-button">
               <Search size={18} />
