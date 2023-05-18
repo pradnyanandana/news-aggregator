@@ -1,34 +1,47 @@
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styles } from "../data/styles";
 import DatePicker from "react-datepicker";
 import Loading from "./Loading";
+import { useSelector, useDispatch } from "react-redux";
+import { saveQuery } from "../app/store";
 import "react-datepicker/dist/react-datepicker.css";
+import { getNewsSearch } from "../requests";
 
 const Search = ({ categories, sources }) => {
   const animatedComponents = makeAnimated();
 
-  const [loading, setLoading] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [selectedSources, setSelectedSources] = useState([]);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const selectedCategories = useSelector((state) => state.filter.categories);
+  const selectedSources = useSelector((state) => state.filter.sources);
+  const startDate = useSelector((state) => state.filter.startDate);
+  const endDate = useSelector((state) => state.filter.endDate);
+  const newsData = useSelector((state) => state.filter.news);
+  const search = useSelector((state) => state.filter.search);
+  const token = useSelector((state) => state.token.value);
+  const dispatch = useDispatch();
 
   const onDateChange = (dates) => {
     const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
+    dispatch(saveQuery({ key: "startDate", value: start }));
+    dispatch(saveQuery({ key: "endDate", value: end }));
   };
 
   const changeCategories = (props) => {
     const categories = [...props];
-    setSelectedCategories(categories);
-    setSelectedSources([...filterSelectedSourced(selectedSources, categories)]);
+    dispatch(saveQuery({ key: "categories", value: categories }));
+    dispatch(
+      saveQuery({
+        key: "sources",
+        value: [...filterSelectedSourced(selectedSources, categories)],
+      })
+    );
   };
 
   const changeSources = (props) => {
-    setSelectedSources([...props]);
+    dispatch(saveQuery({ key: "sources", value: [...props] }));
   };
 
   const filterSelectedSourced = (selectedSources, selectedCategories) => {
@@ -49,9 +62,50 @@ const Search = ({ categories, sources }) => {
     );
   };
 
+  const loadNews = () => {
+    getNewsSearch({
+      token,
+      search,
+      startDate,
+      endDate,
+      sources: selectedSources.map((s) => s.value),
+      categories: selectedCategories.map((c) => c.value),
+    })
+      .then((response) => {
+        if (
+          response !== undefined &&
+          typeof response.data === "object" &&
+          !Array.isArray(response.data) &&
+          response.data !== null
+        ) {
+          dispatch(
+            saveQuery({
+              key: "news",
+              value: response.data.message || [],
+            })
+          );
+        }
+
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  };
+
   const onSubmitFilter = (e) => {
     e.preventDefault();
+    setLoading(true);
+    loadNews();
   };
+
+  useEffect(() => {
+    if (newsData.length === 0) {
+    } else {
+      setLoading(false);
+    }
+  }, []);
 
   return loading ? (
     <Loading />
@@ -112,24 +166,29 @@ const Search = ({ categories, sources }) => {
           </form>
         </div>
         <div className="articles-container">
-          {[1, 2, 3, 4, 5, 6].map((r) => (
-            <article>
+          {newsData.map((data, index) => (
+            <article key={index}>
               <div>
                 <div className="img-container">
-                  <img src="/placeholder.png" alt="Article"></img>
+                  <img
+                    src={data.image || "/placeholder.png"}
+                    alt="Article"
+                  ></img>
                 </div>
               </div>
               <div>
                 <div className="container">
                   <span className="info">
-                    <p>International New York Times</p>
+                    <p>{data.source}</p>
                   </span>
                   <span className="info">
-                    <p>Anna Mercury</p>
+                    <p>{data.author}</p>
                     <span></span>
-                    <p>January 11th 2023</p>
+                    <p>{new Date(data.published_at).toDateString()}</p>
                   </span>
-                  <h5 className="title">The Latest Cat Trends: Hip or Hype?</h5>
+                  <a href={data.url} target="_blank">
+                    <h5 className="title">{data.title}</h5>
+                  </a>
                 </div>
               </div>
             </article>

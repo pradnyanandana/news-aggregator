@@ -62,16 +62,41 @@ const newsSlice = createSlice({
   },
 });
 
+const filterSlice = createSlice({
+  name: "filter",
+  initialState: {
+    search: '',
+    news: [],
+    sources: [],
+    categories: [],
+    startDate: new Date(),
+    endDate: new Date(),
+  },
+  reducers: {
+    saveQuery: (state, action) => {
+      const { key, value } = action.payload;
+      state[key] = value;
+    },
+    removeFilterNews: (state) => {
+      state.news = [];
+    },
+  },
+});
+
 export const { saveUser, removeUser } = userSlice.actions;
 
 export const { saveToken, removeToken } = tokenSlice.actions;
 
 export const { saveNews, removeNews } = newsSlice.actions;
 
+export const { saveQuery, removeFilterNews } = filterSlice.actions;
+
 export default configureStore({
   reducer: {
     user: userSlice.reducer,
     token: tokenSlice.reducer,
     news: newsSlice.reducer,
+    filter: filterSlice.reducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });

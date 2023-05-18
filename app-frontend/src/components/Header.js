@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logoutUser } from "../requests";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { removeToken, removeUser, removeNews } from "../app/store";
+import { removeToken, removeUser, removeNews, saveQuery } from "../app/store";
 
 const MenuButton = ({ open, setOpen }) => {
   const handleClick = () => {
@@ -65,7 +65,7 @@ const Menu = ({ open, pathname, token, handleLogout, loading, categories }) => {
   );
 };
 
-const SearchDrawer = ({ open, setOpen }) => {
+const SearchDrawer = ({ open, setOpen, onSearch }) => {
   const handleClick = () => {
     setOpen(open ? false : "search");
   };
@@ -85,6 +85,7 @@ const SearchDrawer = ({ open, setOpen }) => {
               type="text"
               className="search-term"
               placeholder="Search"
+              onKeyDown={onSearch}
             ></input>
           </div>
         )}
@@ -124,7 +125,10 @@ const Header = ({ categories }) => {
   };
 
   const onSearch = (e) => {
-    console.log(e.target.value);
+    if (e.key === "Enter") {
+      dispatch(saveQuery({ key: "search", value: e.target.value }));
+      navigate("/search");
+    }
   };
 
   return (
@@ -136,13 +140,13 @@ const Header = ({ categories }) => {
               type="text"
               className="search-term"
               placeholder="Search"
-              onInput={onSearch}
+              onKeyDown={onSearch}
             ></input>
             <button type="submit" className="search-button">
               <Search size={18} />
             </button>
           </div>
-          <SearchDrawer open={open} setOpen={setOpen} />
+          <SearchDrawer onSearch={onSearch} open={open} setOpen={setOpen} />
         </div>
         <div className="logo">
           <h1>.innews</h1>
