@@ -422,6 +422,48 @@ header nav a.active {
   padding: 20px 0;
 }
 
+.dashboard {
+  margin-bottom: 60px;
+}
+
+.dashboard > h5 {
+  margin-bottom: 40px;
+}
+
+.dashboard .personal-preferences {
+  padding: 40px 28px;
+  border: solid 1px var(--placeholder-color);
+  border-radius: 5px;
+}
+
+.dashboard .personal-preferences h6 {
+  margin-bottom: 40px;
+}
+
+.dashboard .personal-preferences .option > div {
+  margin-bottom: 20px;
+}
+
+.dashboard .personal-preferences label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.dashboard .personal-preferences p {
+  font-size: 0.825rem;
+  font-style: italic;
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+
+.dashboard .personal-preferences .action {
+  text-align: right;
+}
+
+.dashboard .personal-preferences button {
+  margin-top: 40px;
+}
+
 .site-footer {
   font-size: 15px;
   line-height: 24px;
@@ -746,6 +788,26 @@ header nav a.active {
 
   .category .second-wrapper article .title {
     font-size: 177.28%;
+  }
+
+  .dashboard {
+    margin-bottom: 40px;
+  }
+
+  .dashboard > h5 {
+    margin-bottom: 20px;
+  }
+
+  .dashboard .personal-preferences {
+    padding: 40px 0 0 0;
+    border-width: 0;
+    border-top-width: 1px;
+    border-radius: 0;
+  }
+
+  .dashboard .personal-preferences button {
+    width: 100%;
+    border-radius: 5px;
   }
 
   .slider {
