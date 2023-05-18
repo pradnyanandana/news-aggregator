@@ -50,7 +50,7 @@ class UserController extends Controller
                     "sources"    => "array",
                     "sources.*"  => "string|distinct|in:bleacher-report,bloomberg,business-insider,buzzfeed,crypto-coins-news,engadget,entertainment-weekly,espn,espn-cric-info,fortune,fox-sports,hacker-news,ign,mashable,mtv-news,nfl-news,nhl-news,polygon,recode,techcrunch,techradar,the-next-web,the-verge,the-wall-street-journal,wired,medical-news-today,national-geographic,new-scientist,next-big-future,new-york-times,the-guardian",
                     "categories"    => "array",
-                    "categories.*"  => "string|distinct|in:business,entertainment,technology,health,science,sports",
+                    "categories.*"  => "string|distinct|in:business,entertainment,tech,health,science,sport",
                     "authors"    => "array",
                     "authors.*"  => "string|distinct",
                 ]
@@ -59,7 +59,7 @@ class UserController extends Controller
             if ($validatePreferences->fails()) {
                 return response()->json([
                     'status' => false,
-                    'message' => 'validation error',
+                    'message' => 'Validation Error',
                     'errors' => $validatePreferences->errors()
                 ], 401);
             }
@@ -74,7 +74,8 @@ class UserController extends Controller
 
             return response()->json([
                 'status' => true,
-                'message' => $preferences
+                'message' => 'Succes save data',
+                'data' => $preferences
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([

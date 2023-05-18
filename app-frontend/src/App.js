@@ -39,13 +39,17 @@ const Content = () => {
       <div className="wrapper">
         <Header categories={categoriesFilter} />
         <Routes>
-          <Route path="/" element={<News categories={categoriesFilter}/>}></Route>
+          <Route
+            path="/"
+            element={<News categories={categoriesFilter} />}
+          ></Route>
           <Route path="/sign-in" element={<SignIn />}></Route>
           <Route path="/sign-up" element={<SignUp />}></Route>
           <Route path="/dashboard" element={<Dashboard />}></Route>
           <Route path="/search" element={<Search />}></Route>
-          {categoriesFilter.map((cat) => (
+          {categoriesFilter.map((cat, index) => (
             <Route
+              key={index}
               path={`/${cat.slug}`}
               element={
                 cat.slug === "news" ? (

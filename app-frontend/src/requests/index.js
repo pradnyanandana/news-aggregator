@@ -62,3 +62,20 @@ export const getNewsCategory = ({ token, category }) => {
     }
   );
 };
+
+export const updatePreferences = ({ token, categories, sources, authors }) => {
+  return axios.post(
+    process.env.REACT_APP_API_URL + "/user/preferences",
+    {
+      categories,
+      sources,
+      authors
+    },
+    {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};

@@ -34,13 +34,13 @@ class NewsController extends Controller
             });
 
             if (isset($preferences['authors']) && is_array($preferences['authors']) && count($preferences['authors']) > 0) {
-                $news = array_filter(
+                $news = array_values(array_filter(
                     $news,
                     function ($v, $k) use ($preferences) {
                         return in_array($v['author'], $preferences['authors']);
                     },
                     ARRAY_FILTER_USE_BOTH
-                );
+                ));
             }
 
             return response()->json([

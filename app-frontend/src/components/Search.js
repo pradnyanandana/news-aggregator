@@ -48,8 +48,8 @@ const Search = () => {
     );
   };
 
-  const onSubmitFilter = (event) => {
-    event.preventDefault();
+  const onSubmitFilter = (e) => {
+    e.preventDefault();
   }
 
   return (
