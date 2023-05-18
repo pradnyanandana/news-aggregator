@@ -35,9 +35,17 @@ To create the `.env` file, follow these steps:
    cp .env.example .env
    ```
 
-3. Open the `.env` file in a text editor.
+3. Locate the `.env.example` file in the `app-backend` directory.
 
-4. Replace the placeholder values in the file with your configuration values. For example:
+4. Make a copy of the `.env.example` file and rename it to `.env`.
+   ```
+   cd app-backend
+   cp .env.example .env
+   ```
+
+5. Open the `.env` file in a text editor.
+
+6. Replace the placeholder values in the file with your configuration values. For example:
    ```
    DB_DATABASE=db
    DB_PASSWORD=pass
@@ -48,41 +56,72 @@ To create the `.env` file, follow these steps:
    THE_GUARDIAN_KEY=your_guardian_api_key
    ```
 
-5. Save the changes to the `.env` file.
+7. Save the changes to the `.env` file.
 
 ### Running the Project
 
 Follow these steps to run the project on your local machine:
 
-1. Clone the repository to your local machine.
-   ```
-   git clone https://github.com/pradnyanandana/news-aggregator.git
-   ```
-
-2. Navigate to the project directory.
+1. Navigate to the project directory.
    ```
    cd news-aggregator
    ```
 
-3. Build the Docker images.
+2. Build the Docker images.
    ```
    docker-compose build
    ```
 
-4. Start the project containers.
+3. Start the project containers.
    ```
    docker-compose up
    ```
-
-5. Access the application in your web browser.
-   ```
-   http://localhost:3000
-   ```
    
-6. To stop the project, use `Ctrl+C` in the terminal or run the following command:
+4. To stop the project, use `Ctrl+C` in the terminal or run the following command:
    ```
    docker-compose down
    ```
+
+### Setup Backend
+
+Follow these steps to setup the Laravel application:
+
+1. Find the `news-aggregator-backend` container ID.
+   ```
+   docker container ps
+   ```
+
+2. Go to container terminal.
+   ```
+   docker exec -it {container-id} sh
+   ```
+
+3. In case the composer was not installed
+   ```
+   composer install
+   ```
+
+4. Generate key
+   ```
+   php artisan key:generate
+   ```
+
+5. Run database migrations
+   ```
+   php artisan migrate
+   ```
+
+6. Database seeder
+   ```
+   php artisan migrate
+   ```
+
+### Web URL
+
+Access the application in your web browser.
+```
+http://localhost:3000
+```
 
 ### Configuration
 
