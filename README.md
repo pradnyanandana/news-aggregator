@@ -113,7 +113,7 @@ Follow these steps to setup the Laravel application:
 
 6. Database seeder
    ```
-   php artisan migrate
+   php artisan db:seed
    ```
 
 ### Web URL
