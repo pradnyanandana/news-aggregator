@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { getNews } from "../requests";
+import { getNewsCategory } from "../requests";
 import { saveNews } from "../app/store";
 import { useEffect } from "react";
 
@@ -10,7 +10,7 @@ const Category = ({ category }) => {
 
   useEffect(() => {
     if (newsData.length === 0) {
-      getNews({ token, category: category.slug })
+      getNewsCategory({ token, category: category.slug })
         .then((response) => {
           if (
             response !== undefined &&
@@ -30,7 +30,7 @@ const Category = ({ category }) => {
           console.log(error);
         });
     }
-  }, []);
+  }, [category]);
 
   return (
     <div className="container">
@@ -86,7 +86,9 @@ const Category = ({ category }) => {
                         <span></span>
                         <p>{new Date(data.published_at).toDateString()}</p>
                       </span>
-                      <h5 className="title">{data.title}</h5>
+                      <a href={data.url} target="_blank">
+                        <h5 className="title">{data.title}</h5>
+                      </a>
                     </div>
                   </div>
                 </article>

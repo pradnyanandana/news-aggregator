@@ -12,7 +12,7 @@ const News = () => {
 
   useEffect(() => {
     if (newsData.length === 0) {
-      getNews({ token, category: "news" })
+      getNews({ token })
         .then((response) => {
           if (
             response !== undefined &&

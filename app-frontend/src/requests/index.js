@@ -39,10 +39,21 @@ export const logoutUser = ({ token }) => {
   });
 };
 
-export const getNews = ({ token, category }) => {
-  return axios.get(
-    process.env.REACT_APP_API_URL +
-      `/news${category == "news" ? "" : `/${category}`}`,
+export const getNews = ({ token }) => {
+  return axios.get(process.env.REACT_APP_API_URL + "/news", {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getNewsCategory = ({ token, category }) => {
+  return axios.post(
+    process.env.REACT_APP_API_URL + "/news/category",
+    {
+      category,
+    },
     {
       headers: {
         "Content-type": "application/json",

@@ -5,7 +5,7 @@ export const categories = [
   { title: "Technology", slug: "tech" },
   { title: "Health", slug: "health" },
   { title: "Science", slug: "science" },
-  { title: "Sport", slug: "sports" },
+  { title: "Sport", slug: "sport" },
 ];
 
 export const sources = [

@@ -63,7 +63,7 @@ class NewsController extends Controller
     public function getNewsByCategory(Request $request)
     {
         try {
-            $category = $request->route('category');
+            $category = $request->category;
 
             $news =  $this->getNewsApi(array(
                 'type' => 'category',
@@ -76,7 +76,8 @@ class NewsController extends Controller
 
             return response()->json([
                 'status' => true,
-                'message' => $news
+                'cat' => $category,
+                'message' => $news,
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
@@ -153,8 +154,30 @@ class NewsController extends Controller
     public function getNewsApi($param = [])
     {
         $news = [];
-        $endpoint = isset($param['type']) &&  $param['type'] === 'category' ? "top-headlines" : "everything";
         $sources = 'bleacher-report,bloomberg,business-insider,buzzfeed,crypto-coins-news,engadget,entertainment-weekly,espn,espn-cric-info,fortune,fox-sports,hacker-news,ign,mashable,mtv-news,nfl-news,nhl-news,polygon,recode,techcrunch,techradar,the-next-web,the-verge,the-wall-street-journal,wired,medical-news-today,national-geographic,new-scientist,next-big-future';
+
+        if (isset($param['category'])) {
+            switch ($param['category']) {
+                case 'business':
+                    $sources = 'bloomberg,business-insider,fortune,the-wall-street-journal';
+                    break;
+                case 'entertainment':
+                    $sources = 'buzzfeed,entertainment-weekly,ign,mashable,mtv-news,polygon';
+                    break;
+                case 'tech':
+                    $sources = 'crypto-coins-news,engadget,hacker-news,recode,techcrunch,techradar,the-next-web,the-verge,wired';
+                    break;
+                case 'sport':
+                    $sources = 'bleacher-report,espn,espn-cric-info,fox-sports,nfl-news,nhl-news';
+                    break;
+                case 'science':
+                    $sources = 'national-geographic,new-scientist,next-big-future';
+                    break;
+                case 'health':
+                    $sources = 'medical-news-today';
+                    break;
+            }
+        }
 
         if (isset($param['sources']) && is_array($param['sources'])) {
             $sources = implode(',', $param['sources']);
@@ -162,7 +185,7 @@ class NewsController extends Controller
 
         try {
             $response = Http::withUrlParameters([
-                'endpoint' => "https://newsapi.org/v2/{$endpoint}",
+                'endpoint' => "https://newsapi.org/v2/top-headlines",
                 'apiKey' => env('NEWS_API', ''),
                 'pageSize' => 100,
                 'language' => 'en',
@@ -170,9 +193,8 @@ class NewsController extends Controller
                 'searchIn' => isset($param['search']) ? 'title' : '',
                 'from' => isset($param['begin-date']) ? $param['begin-date'] : '',
                 'to' => isset($param['end-date']) ? $param['end-date'] : '',
-                'sources' => isset($param['category']) ? '' : $sources,
-                'category' => isset($param['category']) ? $param['category'] : ''
-            ])->get('{+endpoint}?sources={sources}&pageSize={pageSize}&country{country}&category{category}&apiKey={apiKey}&q={q}&from={from}&to={to}&language={language}&searchIn={searchIn}');
+                'sources' => $sources
+            ])->get('{+endpoint}?sources={sources}&pageSize={pageSize}&apiKey={apiKey}&q={q}&from={from}&to={to}&language={language}&searchIn={searchIn}');
 
             if ($response->ok()) {
                 $response = $response->json();
