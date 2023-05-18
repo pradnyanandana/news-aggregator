@@ -112,7 +112,6 @@ const NewsSlider = ({ news }) => {
 };
 
 const NewsHomeCategory = ({ category, news }) => {
-  console.log(category, news);
   const datas = news.filter((n) => n.category === category.slug).slice(0, 4);
 
   return (
@@ -145,8 +144,8 @@ const NewsHomeCategory = ({ category, news }) => {
             </article>
           </div>
           <div className="other-article">
-            {datas.slice(1, 4).map((data) => (
-              <article>
+            {datas.slice(1, 4).map((data, index) => (
+              <article key={index}>
                 <div className="container">
                   <span className="info">
                     <p>{data.source}</p>
