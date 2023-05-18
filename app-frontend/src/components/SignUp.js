@@ -25,7 +25,7 @@ const SignUp = () => {
           ></input>
           <button type="submit">Register</button>
         </form>
-        <p>Already have an account? <Link to="/sign-in">Sign ip</Link></p>
+        <p>Already have an account? <Link to="/sign-in">Sign in</Link></p>
       </div>
     </div>
   );

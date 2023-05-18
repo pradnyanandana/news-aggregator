@@ -33,7 +33,7 @@ const Slider = () => {
       {datas.map((data, index) => (
         <article key={index} className={index === activeIndex ? "active" : ""}>
           <div className="img-container">
-            <img src="/sample-image.jpg" alt="Article"></img>
+            <img src="/placeholder.png" alt="Article"></img>
             <button>Sport</button>
           </div>
           <div className="container">

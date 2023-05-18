@@ -8,6 +8,7 @@ import Category from "./components/Category";
 import Dashboard from "./components/Dashboard";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
+import Search from "./components/Search";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/sign-in" element={<SignIn />}></Route>
           <Route path="/sign-up" element={<SignUp />}></Route>
           <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route path="/search" element={<Search />}></Route>
           {categories.map((cat) => (
             <Route
               path={`/${cat.slug}`}

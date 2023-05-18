@@ -24,7 +24,7 @@ const NewsHomeCategory = ({ category }) => {
         <div className="first-article">
           <article>
             <div className="img-container">
-              <img src="/sample-image.jpg" alt="Article"></img>
+              <img src="/placeholder.png" alt="Article"></img>
             </div>
             <div className="container">
               <span className="info">

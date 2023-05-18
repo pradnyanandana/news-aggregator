@@ -7,7 +7,7 @@ const Category = ({ category }) => {
           <article>
             <div>
               <div className="img-container">
-                <img src="/sample-image.jpg" alt="Article"></img>
+                <img src="/placeholder.png" alt="Article"></img>
               </div>
             </div>
             <div>
@@ -30,7 +30,7 @@ const Category = ({ category }) => {
             <article>
               <div>
                 <div className="img-container">
-                  <img src="/sample-image.jpg" alt="Article"></img>
+                  <img src="/placeholder.png" alt="Article"></img>
                 </div>
               </div>
               <div>

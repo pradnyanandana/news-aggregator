@@ -4,6 +4,7 @@ export const styles = {
     '&:hover': {
         border: '1px solid var(--border-color)',
     },
+    padding: "4px 8px",
     borderColor: state.isFocused
       ? "var(--border-color)"
       : "var(--placeholder-color)",

@@ -54,10 +54,12 @@ const Dashboard = () => {
                 styles={styles}
                 value={selectedCategories}
                 onChange={changeCategories}
-                options={categories.map((category) => ({
-                  value: category.slug,
-                  label: category.title,
-                }))}
+                options={categories
+                  .filter((category) => category.slug !== "news")
+                  .map((category) => ({
+                    value: category.slug,
+                    label: category.title,
+                  }))}
               />
               <label>Sources</label>
               <Select

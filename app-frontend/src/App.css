@@ -407,19 +407,28 @@ header nav a.active {
   padding: 0;
 }
 
-.category .second-wrapper {
+.category .second-wrapper,
+.search-page .articles-container {
   display: flex;
   gap: 40px;
   flex-wrap: wrap;
   margin-bottom: 60px;
 }
 
-.category .second-wrapper article {
+.category .second-wrapper article,
+.search-page article {
   width: calc((100% / 3) - (80px / 3));
 }
 
-.category .second-wrapper article .container {
+.category .second-wrapper article .container,
+.search-page article .container {
   padding: 20px 0;
+}
+
+.search-page .filter {
+  position: relative;
+  margin-bottom: 60px;
+  z-index: 1;
 }
 
 .dashboard {
@@ -430,38 +439,59 @@ header nav a.active {
   margin-bottom: 40px;
 }
 
-.dashboard .personal-preferences {
+.dashboard .personal-preferences,
+.search-page .filter {
   padding: 40px 28px;
   border: solid 1px var(--placeholder-color);
   border-radius: 5px;
 }
 
-.dashboard .personal-preferences h6 {
+.dashboard .personal-preferences h6,
+.search-page .filter h6 {
   margin-bottom: 40px;
+}
+
+.search-page .filter .option {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.search-page .filter .option > div {
+  position: relative;
+  width: calc((100% / 3) - (80px / 3));
 }
 
 .dashboard .personal-preferences .option > div {
   margin-bottom: 20px;
 }
 
-.dashboard .personal-preferences label {
+.dashboard .personal-preferences label,
+.search-page .filter .option label {
   display: block;
   margin-bottom: 10px;
 }
 
-.dashboard .personal-preferences p {
+.dashboard .personal-preferences p,
+.search-page .filter .option p {
   font-size: 0.825rem;
   font-style: italic;
-  margin-top: -10px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 }
 
-.dashboard .personal-preferences .action {
+.dashboard .personal-preferences .action,
+.search-page .filter .action {
   text-align: right;
 }
 
-.dashboard .personal-preferences button {
+.dashboard .personal-preferences button,
+.search-page .filter .action button {
   margin-top: 40px;
+}
+
+.search-page .filter input {
+  border-radius: 5px;
+  border-color: var(--placeholder-color);
 }
 
 .site-footer {
@@ -700,6 +730,10 @@ header nav a.active {
     padding: 40px 0 0 0;
   }
 
+  .container span.info p {
+    margin-block-start: 0.125em;
+  }
+
   header .navigation .search,
   header .buttons button {
     display: none;
@@ -777,12 +811,14 @@ header nav a.active {
     margin-bottom: 20px;
   }
 
-  .category .second-wrapper {
+  .category .second-wrapper,
+  .search-page .articles-container {
     gap: 20px;
     margin-bottom: 40px;
   }
 
-  .category .second-wrapper article {
+  .category .second-wrapper article,
+  .search-page article {
     width: 100%;
   }
 
@@ -798,16 +834,38 @@ header nav a.active {
     margin-bottom: 20px;
   }
 
-  .dashboard .personal-preferences {
-    padding: 40px 0 0 0;
+  .dashboard .personal-preferences,
+  .search-page .filter {
     border-width: 0;
-    border-top-width: 1px;
     border-radius: 0;
   }
 
-  .dashboard .personal-preferences button {
+  .dashboard .personal-preferences {
+    padding: 40px 0 0 0;
+    border-top-width: 1px;
+  }
+
+  .dashboard .personal-preferences button,
+  .search-page .filter .action button {
     width: 100%;
     border-radius: 5px;
+  }
+
+  .search-page .filter {
+    padding: 0 0 40px 0;
+    border-bottom-width: 1px;
+  }
+
+  .search-page .filter h6 {
+    margin-bottom: 20px;
+  }
+
+  .search-page .filter .option {
+    gap: 20px;
+  }
+
+  .search-page .filter .option > div {
+    width: 100%;
   }
 
   .slider {
