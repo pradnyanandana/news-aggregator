@@ -152,6 +152,7 @@ class NewsController extends Controller
             }
 
             $search = $request->all();
+            $search['type'] = 'search';
 
             $news = array_merge(
                 $this->getNewsApi($search),
@@ -237,6 +238,7 @@ class NewsController extends Controller
     public function getNewsApi($param = [])
     {
         $news = [];
+        $endpoint = isset($param['type']) && $param['search'] === 'search' ? 'everything' : 'top-headlines';
         $sources = 'bleacher-report,bloomberg,business-insider,buzzfeed,crypto-coins-news,engadget,entertainment-weekly,espn,espn-cric-info,fortune,fox-sports,hacker-news,ign,mashable,mtv-news,nfl-news,nhl-news,polygon,recode,techcrunch,techradar,the-next-web,the-verge,the-wall-street-journal,wired,medical-news-today,national-geographic,new-scientist,next-big-future';
 
         if (isset($param['category'])) {
@@ -268,7 +270,7 @@ class NewsController extends Controller
 
         try {
             $response = Http::withUrlParameters([
-                'endpoint' => "https://newsapi.org/v2/top-headlines",
+                'endpoint' => "https://newsapi.org/v2/{$endpoint}",
                 'apiKey' => env('NEWS_API', ''),
                 'pageSize' => 100,
                 'language' => 'en',
@@ -322,14 +324,6 @@ class NewsController extends Controller
                     'from' => isset($param['begin_date']) ? (new DateTime($param['begin_date']))->format('Ymd') : '',
                     'to' => isset($param['end_date']) ? (new DateTime($param['end_date']))->format('Ymd') : '',
                 ])->get('{+endpoint}?api-key={apiKey}&q={q}&begin_date={from}&end_date{to}');
-
-                error_log(var_export([
-                    'endpoint' => 'https://api.nytimes.com/svc/search/v2/articlesearch.json',
-                    'apiKey' => env('NEW_YORK_TIMES_API', ''),
-                    'q' => isset($param['search']) ? urlencode($param['search']) : '',
-                    'from' => isset($param['begin_date']) ? (new DateTime($param['begin_date']))->format('Ymd') : '',
-                    'to' => isset($param['end_date']) ? (new DateTime($param['end_date']))->format('Ymd') : '',
-                ], true));
 
                 if ($response->ok()) {
                     $response = $response->json();

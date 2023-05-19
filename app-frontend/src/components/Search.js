@@ -66,8 +66,8 @@ const Search = ({ categories, sources }) => {
     getNewsSearch({
       token,
       search,
-      startDate,
-      endDate,
+      startDate: startDate || new Date(),
+      endDate: endDate || new Date(),
       sources: selectedSources.map((s) => s.value),
       categories: selectedCategories.map((c) => c.value),
     })
